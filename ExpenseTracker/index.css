@@ -1,0 +1,17 @@
+/* ============================================================
+   index.css — Dashboard page
+   Uses min-width media queries (mobile-first).
+   ============================================================ */
+
+/* ── BREAKDOWN CARD ── */
+/* xs: no sticky, normal flow */
+.breakdown-col { }
+
+/* xl >= 1200px: sticky so it stays in view while scrolling charts */
+@media (min-width: 1200px) {
+  .breakdown-col {
+    position: sticky;
+    top: calc(56px + 16px);   /* topbar height + gap */
+    align-self: flex-start;
+  }
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="icon" type="image/png" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA8AD4DASIAAhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAMEAQUGAgf/xAAvEAABBAIBBAECAgsAAAAAAAABAAIDBAURIQYSMUFRFGEHMhMjQlJxk6GxwdHw/8QAGwEAAQQDAAAAAAAAAAAAAAAAAgABBAUDBgf/xAAhEQACAgICAgMBAAAAAAAAAAABAgADBBESMSFBMnGB8P/aAAwDAQACEQMRAD8A75ERcFnSoU1WtPaeWQRl7h55A/uoVQg6zx+DuSUb9rb2a57XOOiON6HlSsXFfJYqg2R6EFjpd7A+5sHAtcWuBBB0QfSwvTM7BnKrZ6kgfAHnnRB7ve9rysNtZqco3YiU8huERFjhQiKek1pnBf4byjrQuwUe4p7hqEgOl20H17UU/SPS2RuC1lKET5ZCGd7pnM7j4A4cNlXJpw6U6K4LKTZrrDP2sdijXhr4eXY/Su7XPlGxvwfYOvXyeVe4eGTYeD8AB5bf97kbLIC61ufVaXSOFq0G1MfW+kYNkdjiefvsna0eWxtjHTBkwBa78jx4ctv+HfUMue6ebatxiOzFIYZdDQLgAd69eRx87W3zjI7eOkidrYG2H4PpQMrGdbGV/kO5FpuZCB6nCIsrCrpZwqOVuOqSQEHTXktJ+/Gv8q8qmWpC/SdB3dr/AMzHfuuHhScSxa7lZuo6kA+ZLVs97Q7fK410eOyXUuUsUMhYwmQrv7JXl4a2YDguABBHjnnXg+SVZr5CehL9NdjfG9vHPv7j5CpZ+pSylqG3AIop+8Cd5JHezXwPJ/7fC23DrFdhO9AjwR5H6OiDByai6gqNzt+g+oblvBNkuyF8rHlncfJGgefvzpbq1mf1ZBJXHVsjSqV2wV2CONg01oKt0ZJLrxKWObCPBP7X8FWZioHa3XFd9RlxlVRy7myJ2SflYRFrphQiIminiaKKZnZNEyRvw9oI/qoRjsePFGr/ACm/6VlEa2Oo0DFuQMpUmODmVK7SPBEYBU6ImZ2bs7ihERDFP//Z"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>  <title>Settings — ExpenseTracker</title>
+  <!-- Bootstrap 5.3 -->
+  <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" defer></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- SweetAlert2 -->
+  <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.6/sweetalert2.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.6/sweetalert2.all.min.js"></script>
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="shared.css"/>
+  <link rel="stylesheet" href="settings.css"/>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ════════════════════════════════════════
+       SIDEBAR  (lg and above)
+       ════════════════════════════════════════ -->
+  <aside class="et-sidebar">
+    <a href="index.html" class="sb-logo">
+      <div class="logo-icon">💰</div>
+      <div>
+        <div class="logo-text">Expense<span>Tracker</span></div>
+        <div class="logo-sub">Personal Finance</div>
+      </div>
+    </a>
+
+    <nav class="sb-nav d-flex flex-column">
+      <a href="index.html"        class="sb-link"><span class="sb-icon">🏠</span> Dashboard</a>
+      <a href="transactions.html" class="sb-link"><span class="sb-icon">📋</span> Transactions</a>
+      <a href="about.html"        class="sb-link"><span class="sb-icon">👤</span> About</a>
+      <a href="settings.html"     class="sb-link active"><span class="sb-icon">⚙️</span> Settings</a>
+      <button class="sb-add-btn" onclick="openSheet()"><span class="sb-icon">＋</span> Add Transaction</button>
+    </nav>
+
+    <div class="sb-bottom">
+      <div class="d-flex align-items-center justify-content-between px-1 pb-1">
+        <span class="set-label" style="font-size:.82rem; color:var(--text2)">Dark Mode</span>
+        <label class="et-toggle">
+          <input type="checkbox" id="darkToggle" onchange="toggleTheme()"/>
+          <span class="et-toggle-track"></span>
+        </label>
+      </div>
+      <div class="sb-version">ExpenseTracker v2.0</div>
+    </div>
+  </aside>
+
+  <!-- ════════════════════════════════════════
+       MAIN
+       ════════════════════════════════════════ -->
+  <div class="et-main">
+
+    <!-- ── TOPBAR ── -->
+    <div class="et-topbar">
+      <div class="topbar-title">Settings</div>
+      <div class="topbar-right">
+        <!-- No month pill on settings page -->
+        <button class="theme-btn-top" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      </div>
+    </div>
+
+    <!-- ── PAGE CONTENT ── -->
+    <div class="page-wrap flex-grow-1">
+
+      <!--
+        Settings form centred and capped in width:
+          xs:   col-12               → full width
+          sm:   col-12               → full width
+          md:   col-10 offset-1      → slight inset
+          lg:   col-8  offset-2      → centred, comfortable
+          xl:   col-6  offset-3      → centred, narrower
+          xxl:  col-5  offset-3-ish  → max comfortable reading width
+      -->
+      <div class="row">
+        <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 col-xxl-5 offset-xxl-3">
+
+          <!-- PREFERENCES -->
+          <div class="sec-title mb-2 mb-sm-3">Preferences</div>
+          <div class="et-card mb-3 mb-sm-4">
+
+            <!-- Dark mode toggle -->
+            <div class="set-item">
+              <div class="d-flex align-items-center gap-3">
+                <div class="set-ico">🌗</div>
+                <div>
+                  <div class="set-label">Dark Mode</div>
+                  <div class="set-sub">Toggle light / dark theme</div>
+                </div>
+              </div>
+              <label class="et-toggle">
+                <input type="checkbox" id="darkToggle" onchange="toggleTheme()"/>
+                <span class="et-toggle-track"></span>
+              </label>
+            </div>
+
+            <!-- Storage info -->
+            <div class="set-item">
+              <div class="d-flex align-items-center gap-3">
+                <div class="set-ico">💾</div>
+                <div>
+                  <div class="set-label">Storage</div>
+                  <div class="set-sub">localStorage — browser only, no server</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /et-card preferences -->
+
+          <!-- DATA -->
+          <div class="sec-title mb-2 mb-sm-3">Data</div>
+          <div class="et-card mb-3 mb-sm-4">
+
+            <!-- Total entries -->
+            <div class="set-item">
+              <div class="d-flex align-items-center gap-3">
+                <div class="set-ico">📊</div>
+                <div>
+                  <div class="set-label">Total Entries</div>
+                  <div class="set-sub" id="totalEntries">0 transactions</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- This month -->
+            <div class="set-item">
+              <div class="d-flex align-items-center gap-3">
+                <div class="set-ico">📅</div>
+                <div>
+                  <div class="set-label">This Month</div>
+                  <div class="set-sub" id="monthSummary">—</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /et-card data -->
+
+          <!-- DANGER ZONE -->
+          <button class="et-btn-danger mb-2 mb-sm-3" onclick="clearAll()">🗑 Clear All Data</button>
+
+          <div class="settings-footer pb-4">
+            ExpenseTracker v2.0<br/>
+            Data stored locally in your browser.<br/>
+            No accounts. No servers. No tracking.
+          </div>
+
+        </div><!-- /col -->
+      </div><!-- /row -->
+
+    </div><!-- /page-wrap -->
+  </div><!-- /et-main -->
+</div><!-- /app-shell -->
+
+<!-- BOTTOM NAV -->
+<nav class="et-bottom-nav">
+  <a href="index.html"        class="bnav-btn"><span class="bnav-icon">🏠</span>Dashboard</a>
+  <a href="transactions.html" class="bnav-btn"><span class="bnav-icon">📋</span>Transactions</a>
+  <button class="bnav-btn bnav-add" onclick="openSheet()" aria-label="Add transaction">
+    <span class="bnav-add-icon">＋</span>
+    <span>Add</span>
+  </button>
+  <a href="settings.html"     class="bnav-btn active"><span class="bnav-icon">⚙️</span>Settings</a>
+  <a href="about.html"        class="bnav-btn"><span class="bnav-icon">👤</span>About</a>
+</nav>
+
+<!-- ADD TRANSACTION SHEET -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="sheet" id="addSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">New Transaction</div>
+  <div class="sheet-body">
+    <div class="type-seg">
+      <button class="type-seg-btn sel-inc" id="btnInc" onclick="setType('income')">＋ Income</button>
+      <button class="type-seg-btn"         id="btnExp" onclick="setType('expense')">－ Expense</button>
+    </div>
+    <div>
+      <label class="et-label">Amount</label>
+      <input class="et-input big" id="fAmt" type="number" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal"/>
+    </div>
+    <div>
+      <label class="et-label">Description (optional)</label>
+      <input class="et-input" id="fDesc" type="text" placeholder="What was this for?"/>
+    </div>
+    <div>
+      <label class="et-label">Category</label>
+      <select class="et-select" id="fCat"></select>
+    </div>
+    <div>
+      <label class="et-label">Date</label>
+      <input class="et-input" id="fDate" type="date"/>
+    </div>
+    <button class="et-btn-accent" onclick="addTx()">Add Transaction</button>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script src="settings.js"></script>
+
+</body>
+</html>

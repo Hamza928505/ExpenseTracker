@@ -1,0 +1,179 @@
+/* ============================================================
+   about.css — About page
+   ============================================================ */
+
+/* ── AVATAR ── */
+.dev-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #000;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(232,160,32,0.4);
+  letter-spacing: -0.04em;
+}
+
+@media (min-width: 576px) {
+  .dev-avatar { width: 90px; height: 90px; font-size: 2.1rem; }
+}
+@media (min-width: 768px) {
+  .dev-avatar { width: 100px; height: 100px; font-size: 2.4rem; }
+}
+
+/* ── DEV NAME ── */
+.dev-name {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+@media (min-width: 576px) { .dev-name { font-size: 1.6rem; } }
+@media (min-width: 768px) { .dev-name { font-size: 1.8rem; } }
+
+.dev-handle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  color: var(--text3);
+  margin-top: 3px;
+}
+
+.dev-bio {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.65;
+  max-width: 520px;
+}
+@media (min-width: 768px) { .dev-bio { font-size: 0.88rem; } }
+
+/* ── SOCIAL LINKS ── */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 9px;
+  border: 1.5px solid var(--border2);
+  background: var(--bg3);
+  color: var(--text2);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.social-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.social-icon { font-size: 0.95rem; }
+
+/* ── SKILL CHIPS ── */
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  color: var(--text2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (min-width: 576px) { .skill-chip { font-size: 0.6rem; padding: 5px 13px; } }
+
+.skill-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── PROJECT CARDS ── */
+.proj-card {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 16px;
+  height: 100%;
+}
+@media (min-width: 576px) { .proj-card { padding: 18px 18px; } }
+@media (min-width: 768px) { .proj-card { padding: 20px 20px; } }
+
+.proj-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--proj-color, var(--accent));
+}
+
+.proj-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  background: var(--bg3);
+  margin-bottom: 12px;
+}
+
+.proj-title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+@media (min-width: 768px) { .proj-title { font-size: 0.95rem; } }
+
+.proj-desc {
+  font-size: 0.78rem;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+@media (min-width: 768px) { .proj-desc { font-size: 0.8rem; } }
+
+.proj-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--proj-color, var(--accent));
+  background: color-mix(in srgb, var(--proj-color, var(--accent)) 12%, transparent);
+  padding: 2px 8px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* ── APP STAT STRIP ── */
+.app-stat {
+  text-align: center;
+  padding: 16px 8px;
+  border-right: 1px solid var(--border);
+}
+.app-stat:last-child { border-right: none; }
+
+.app-stat-val {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+@media (min-width: 576px) { .app-stat-val { font-size: 1.6rem; } }
+
+.app-stat-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 2px;
+}

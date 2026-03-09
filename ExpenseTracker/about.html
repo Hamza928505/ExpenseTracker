@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="icon" type="image/png" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA8AD4DASIAAhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAMEAQUGAgf/xAAvEAABBAIBBAECAgsAAAAAAAABAAIDBAURIQYSMUFRFGEHMhMjQlJxk6GxwdHw/8QAGwEAAQQDAAAAAAAAAAAAAAAAAgABBAUDBgf/xAAhEQACAgICAgMBAAAAAAAAAAABAgADBBESMSFBMnGB8P/aAAwDAQACEQMRAD8A75ERcFnSoU1WtPaeWQRl7h55A/uoVQg6zx+DuSUb9rb2a57XOOiON6HlSsXFfJYqg2R6EFjpd7A+5sHAtcWuBBB0QfSwvTM7BnKrZ6kgfAHnnRB7ve9rysNtZqco3YiU8huERFjhQiKek1pnBf4byjrQuwUe4p7hqEgOl20H17UU/SPS2RuC1lKET5ZCGd7pnM7j4A4cNlXJpw6U6K4LKTZrrDP2sdijXhr4eXY/Su7XPlGxvwfYOvXyeVe4eGTYeD8AB5bf97kbLIC61ufVaXSOFq0G1MfW+kYNkdjiefvsna0eWxtjHTBkwBa78jx4ctv+HfUMue6ebatxiOzFIYZdDQLgAd69eRx87W3zjI7eOkidrYG2H4PpQMrGdbGV/kO5FpuZCB6nCIsrCrpZwqOVuOqSQEHTXktJ+/Gv8q8qmWpC/SdB3dr/AMzHfuuHhScSxa7lZuo6kA+ZLVs97Q7fK410eOyXUuUsUMhYwmQrv7JXl4a2YDguABBHjnnXg+SVZr5CehL9NdjfG9vHPv7j5CpZ+pSylqG3AIop+8Cd5JHezXwPJ/7fC23DrFdhO9AjwR5H6OiDByai6gqNzt+g+oblvBNkuyF8rHlncfJGgefvzpbq1mf1ZBJXHVsjSqV2wV2CONg01oKt0ZJLrxKWObCPBP7X8FWZioHa3XFd9RlxlVRy7myJ2SflYRFrphQiIminiaKKZnZNEyRvw9oI/qoRjsePFGr/ACm/6VlEa2Oo0DFuQMpUmODmVK7SPBEYBU6ImZ2bs7ihERDFP//Z"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <title>About — ExpenseTracker</title>
+
+  <!-- Bootstrap 5.3 -->
+  <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" defer></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- SweetAlert2 -->
+  <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.6/sweetalert2.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.6/sweetalert2.all.min.js"></script>
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="shared.css"/>
+  <link rel="stylesheet" href="about.css"/>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ════════════════════════════════════════
+       SIDEBAR
+       ════════════════════════════════════════ -->
+  <aside class="et-sidebar">
+    <a href="index.html" class="sb-logo">
+      <div class="logo-icon">💰</div>
+      <div>
+        <div class="logo-text">Expense<span>Tracker</span></div>
+        <div class="logo-sub">Personal Finance</div>
+      </div>
+    </a>
+
+    <nav class="sb-nav d-flex flex-column">
+      <a href="index.html"        class="sb-link"><span class="sb-icon">🏠</span> Dashboard</a>
+      <a href="transactions.html" class="sb-link"><span class="sb-icon">📋</span> Transactions</a>
+      <a href="settings.html"     class="sb-link"><span class="sb-icon">⚙️</span> Settings</a>
+      <a href="about.html"        class="sb-link active"><span class="sb-icon">👤</span> About</a>
+      <button class="sb-add-btn" onclick="openSheet()"><span class="sb-icon">＋</span> Add Transaction</button>
+    </nav>
+
+    <div class="sb-bottom">
+      <div class="d-flex align-items-center justify-content-between px-1 pb-1">
+        <span class="set-label" style="font-size:.82rem; color:var(--text2)">Dark Mode</span>
+        <label class="et-toggle">
+          <input type="checkbox" id="darkToggle" onchange="toggleTheme()"/>
+          <span class="et-toggle-track"></span>
+        </label>
+      </div>
+      <div class="sb-version">ExpenseTracker v2.0</div>
+    </div>
+  </aside>
+
+  <!-- ════════════════════════════════════════
+       MAIN
+       ════════════════════════════════════════ -->
+  <div class="et-main">
+
+    <!-- ── TOPBAR ── -->
+    <div class="et-topbar">
+      <div class="topbar-title">About</div>
+      <div class="topbar-right">
+        <button class="theme-btn-top" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      </div>
+    </div>
+
+    <!-- ── PAGE CONTENT ── -->
+    <div class="page-wrap flex-grow-1">
+
+      <!-- ══════════════════════════════════════════════════════
+           DEVELOPER PROFILE CARD
+           ══════════════════════════════════════════════════════ -->
+      <div class="et-card p-3 p-md-4 mb-3">
+        <!-- Avatar + Name row -->
+        <div class="d-flex align-items-center gap-3 gap-md-4 mb-3">
+          <div class="dev-avatar">HS</div>
+          <div>
+            <div class="dev-name">Hamza Salameh</div>
+            <div class="dev-handle">@HamzaSalameh · Hamza928505</div>
+          </div>
+        </div>
+
+        <!-- Bio -->
+        <p class="dev-bio mb-3">
+          Junior software developer with a passion for building practical tools.
+          Working across full-stack web development, desktop apps, and cybersecurity.
+          Currently pursuing a senior project on <strong>Drone Detection</strong>
+          and exploring ethical hacking &amp; Red Hat certifications.
+        </p>
+
+        <!-- Social links -->
+        <div class="d-flex flex-wrap gap-2">
+          <a class="social-link"
+             href="https://github.com/Hamza928505"
+             target="_blank" rel="noopener">
+            <span class="social-icon">🐙</span> GitHub
+          </a>
+          <a class="social-link"
+             href="https://www.linkedin.com/in/hamza-salameh-287a53258"
+             target="_blank" rel="noopener">
+            <span class="social-icon">💼</span> LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+           TECH STACK
+           ══════════════════════════════════════════════════════ -->
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="sec-title">Tech Stack</div>
+      </div>
+      <div class="et-card p-3 p-md-4 mb-3">
+        <div class="skill-chips-wrap">
+          <span class="skill-chip">©️ C</span>
+          <span class="skill-chip">©️ C++</span>
+          <span class="skill-chip">🟣 C# .NET</span>
+          <span class="skill-chip">🏗 MVC</span>
+          <span class="skill-chip">☕ Java</span>
+          <span class="skill-chip">🐬 MySQL</span>
+          <span class="skill-chip">🌐 HTML / CSS / JS</span>
+          <span class="skill-chip">🅱 Bootstrap 5</span>
+          <span class="skill-chip">🐧 Linux / Shell / Bash</span>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+           PROJECTS
+           xs:   1 col  (col-12)
+           sm:   1 col  (col-12)
+           md:   2 cols (col-md-6)
+           lg:   2 cols (col-lg-6)
+           xl:   3 cols (col-xl-4)
+           ══════════════════════════════════════════════════════ -->
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="sec-title">Projects</div>
+        <span class="sec-badge">6 projects</span>
+      </div>
+
+      <div class="row g-2 g-md-3 mb-3">
+
+        <!-- Expense Tracker — current page project -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#e8a020">
+            <div class="proj-icon">💰</div>
+            <div class="proj-title">Expense Tracker</div>
+            <div class="proj-desc">
+              A responsive web app for managing personal finances. Tracks income and expenses
+              by category, visualises spending with charts, and works seamlessly on phones and
+              desktop.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">HTML · CSS · JS</span>
+              <span class="proj-tag">Bootstrap 5</span>
+              <span class="proj-tag">Chart.js</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drone Detection -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#3b82f6">
+            <div class="proj-icon">🚁</div>
+            <div class="proj-title">Drone Detection <span class="proj-tag ms-1" style="font-size:.48rem">Senior Project</span></div>
+            <div class="proj-desc">
+              A graduation project focused on detecting drones using computer-vision and
+              machine-learning techniques — combining signal processing and classification
+              algorithms.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">Computer Vision</span>
+              <span class="proj-tag">ML</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pizza Ordering App -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#ef4444">
+            <div class="proj-icon">🍕</div>
+            <div class="proj-title">Pizza Ordering App</div>
+            <div class="proj-desc">
+              A Java MVC desktop application for ordering pizza. The <code>PizzaOrder</code>
+              view handles the GUI panels, the <code>Model</code> manages customer and pizza
+              data, and the <code>Controller</code> wires them together.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">Java</span>
+              <span class="proj-tag">MVC</span>
+              <span class="proj-tag">NetBeans</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RSA -->
+
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════
+           APP STATS STRIP
+           ══════════════════════════════════════════════════════ -->
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="sec-title">About This App</div>
+      </div>
+      <div class="et-card mb-3">
+        <div class="row g-0 text-center">
+          <div class="col-6 col-sm-3">
+            <div class="app-stat">
+              <div class="app-stat-val">3</div>
+              <div class="app-stat-lbl">Pages</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <div class="app-stat">
+              <div class="app-stat-val">13</div>
+              <div class="app-stat-lbl">Categories</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <div class="app-stat">
+              <div class="app-stat-val">3</div>
+              <div class="app-stat-lbl">Charts</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <div class="app-stat">
+              <div class="app-stat-val">0</div>
+              <div class="app-stat-lbl">Servers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- footer note -->
+      <div class="settings-footer pb-4">
+        ExpenseTracker v2.0 · Built by Hamza Salameh<br/>
+        100% client-side · No accounts · No tracking · Data stays in your browser
+      </div>
+
+    </div><!-- /page-wrap -->
+  </div><!-- /et-main -->
+</div><!-- /app-shell -->
+
+<!-- ════════════════════════════════════════
+     BOTTOM NAV  (xs → md)
+     ════════════════════════════════════════ -->
+<nav class="et-bottom-nav">
+  <a href="index.html"        class="bnav-btn"><span class="bnav-icon">🏠</span>Dashboard</a>
+  <a href="transactions.html" class="bnav-btn"><span class="bnav-icon">📋</span>Transactions</a>
+  <button class="bnav-btn bnav-add" onclick="openSheet()" aria-label="Add transaction">
+    <span class="bnav-add-icon">＋</span>
+    <span>Add</span>
+  </button>
+  <a href="settings.html"     class="bnav-btn"><span class="bnav-icon">⚙️</span>Settings</a>
+  <a href="about.html"        class="bnav-btn active"><span class="bnav-icon">👤</span>About</a>
+</nav>
+
+<!-- ADD TRANSACTION SHEET -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="sheet" id="addSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">New Transaction</div>
+  <div class="sheet-body">
+    <div class="type-seg">
+      <button class="type-seg-btn sel-inc" id="btnInc" onclick="setType('income')">＋ Income</button>
+      <button class="type-seg-btn"         id="btnExp" onclick="setType('expense')">－ Expense</button>
+    </div>
+    <div>
+      <label class="et-label">Amount</label>
+      <input class="et-input big" id="fAmt" type="number" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal"/>
+    </div>
+    <div>
+      <label class="et-label">Description (optional)</label>
+      <input class="et-input" id="fDesc" type="text" placeholder="What was this for?"/>
+    </div>
+    <div>
+      <label class="et-label">Category</label>
+      <select class="et-select" id="fCat"></select>
+    </div>
+    <div>
+      <label class="et-label">Date</label>
+      <input class="et-input" id="fDate" type="date"/>
+    </div>
+    <button class="et-btn-accent" onclick="addTx()">Add Transaction</button>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+
+</body>
+</html>

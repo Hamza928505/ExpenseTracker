@@ -1,0 +1,18 @@
+/* ============================================================
+   settings.css — Settings page
+   Uses min-width media queries (mobile-first).
+   ============================================================ */
+
+/* ── FOOTER NOTE ── */
+.settings-footer {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  line-height: 2;
+  text-align: center;
+  /* xs */
+  font-size: 0.55rem;
+}
+
+@media (min-width: 576px) {
+  .settings-footer { font-size: 0.58rem; }
+}
