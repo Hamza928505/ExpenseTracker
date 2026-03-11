@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>
-  <link rel="icon" type="image/png" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA8AD4DASIAAhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAMEAQUGAgf/xAAvEAABBAIBBAECAgsAAAAAAAABAAIDBAURIQYSMUFRFGEHMhMjQlJxk6GxwdHw/8QAGwEAAQQDAAAAAAAAAAAAAAAAAgABBAUDBgf/xAAhEQACAgICAgMBAAAAAAAAAAABAgADBBESMSFBMnGB8P/aAAwDAQACEQMRAD8A75ERcFnSoU1WtPaeWQRl7h55A/uoVQg6zx+DuSUb9rb2a57XOOiON6HlSsXFfJYqg2R6EFjpd7A+5sHAtcWuBBB0QfSwvTM7BnKrZ6kgfAHnnRB7ve9rysNtZqco3YiU8huERFjhQiKek1pnBf4byjrQuwUe4p7hqEgOl20H17UU/SPS2RuC1lKET5ZCGd7pnM7j4A4cNlXJpw6U6K4LKTZrrDP2sdijXhr4eXY/Su7XPlGxvwfYOvXyeVe4eGTYeD8AB5bf97kbLIC61ufVaXSOFq0G1MfW+kYNkdjiefvsna0eWxtjHTBkwBa78jx4ctv+HfUMue6ebatxiOzFIYZdDQLgAd69eRx87W3zjI7eOkidrYG2H4PpQMrGdbGV/kO5FpuZCB6nCIsrCrpZwqOVuOqSQEHTXktJ+/Gv8q8qmWpC/SdB3dr/AMzHfuuHhScSxa7lZuo6kA+ZLVs97Q7fK410eOyXUuUsUMhYwmQrv7JXl4a2YDguABBHjnnXg+SVZr5CehL9NdjfG9vHPv7j5CpZ+pSylqG3AIop+8Cd5JHezXwPJ/7fC23DrFdhO9AjwR5H6OiDByai6gqNzt+g+oblvBNkuyF8rHlncfJGgefvzpbq1mf1ZBJXHVsjSqV2wV2CONg01oKt0ZJLrxKWObCPBP7X8FWZioHa3XFd9RlxlVRy7myJ2SflYRFrphQiIminiaKKZnZNEyRvw9oI/qoRjsePFGr/ACm/6VlEa2Oo0DFuQMpUmODmVK7SPBEYBU6ImZ2bs7ihERDFP//Z"/>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<head>  <meta charset="UTF-8"/>
+  <!-- ── PWA / Home-screen icon support ── -->
+  <link rel="manifest" href="manifest.json"/>
+  <!-- iOS Safari -->
   <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="ExpenseTracker"/>
+  <link rel="apple-touch-icon" href="icon-180.png"/>
+  <!-- Android / Chrome -->
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#e8a020"/>
+  <!-- Standard favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <title>About — ExpenseTracker</title>
 
   <!-- Bootstrap 5.3 -->
@@ -54,6 +64,7 @@
           <span class="et-toggle-track"></span>
         </label>
       </div>
+      <div class="sb-version">ExpenseTracker v2.0</div>
     </div>
   </aside>
 
@@ -88,7 +99,7 @@
 
         <!-- Bio -->
         <p class="dev-bio mb-3">
-          Junior software developer with a passion for building practical tools.
+          Beginner software developer with a passion for building practical tools.
           Working across full-stack web development, desktop apps, and cybersecurity.
           Currently pursuing a senior project on <strong>Drone Detection</strong>
           and exploring ethical hacking &amp; Red Hat certifications.
@@ -102,7 +113,7 @@
             <span class="social-icon">🐙</span> GitHub
           </a>
           <a class="social-link"
-             href="https://www.linkedin.com/in/hamza-salameh-287a53258"
+             href="https://www.linkedin.com/in/HamzaSalameh"
              target="_blank" rel="noopener">
             <span class="social-icon">💼</span> LinkedIn
           </a>
@@ -117,15 +128,20 @@
       </div>
       <div class="et-card p-3 p-md-4 mb-3">
         <div class="skill-chips-wrap">
-          <span class="skill-chip">©️ C</span>
-          <span class="skill-chip">©️ C++</span>
           <span class="skill-chip">🟣 C# .NET</span>
-          <span class="skill-chip">🏗 MVC</span>
+          <span class="skill-chip">🏗 MVC .NET</span>
           <span class="skill-chip">☕ Java</span>
-          <span class="skill-chip">🐬 MySQL</span>
-          <span class="skill-chip">🌐 HTML / CSS / JS</span>
+          <span class="skill-chip">🗄 MySQL</span>
+          <span class="skill-chip">☁️ Azure SQL</span>
+          <span class="skill-chip">🔷 EF Core</span>
+          <span class="skill-chip">🌐 HTML · CSS · JS</span>
           <span class="skill-chip">🅱 Bootstrap 5</span>
-          <span class="skill-chip">🐧 Linux / Shell / Bash</span>
+          <span class="skill-chip">🐧 Linux / Shell</span>
+          <span class="skill-chip">🔒 Ethical Hacking</span>
+          <span class="skill-chip">🏷 FluentValidation</span>
+          <span class="skill-chip">🔧 NetBeans IDE</span>
+          <span class="skill-chip">🖥 Visual Studio</span>
+          <span class="skill-chip">🐙 Git · GitHub</span>
         </div>
       </div>
 
@@ -139,7 +155,7 @@
            ══════════════════════════════════════════════════════ -->
       <div class="d-flex align-items-center justify-content-between mb-2">
         <div class="sec-title">Projects</div>
-        <span class="sec-badge">6 projects</span>
+        <span class="sec-badge">7 projects</span>
       </div>
 
       <div class="row g-2 g-md-3 mb-3">
@@ -179,6 +195,42 @@
           </div>
         </div>
 
+        <!-- CyberSafe Logger -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#22a75e">
+            <div class="proj-icon">🛡️</div>
+            <div class="proj-title">CyberSafe Logger</div>
+            <div class="proj-desc">
+              A desktop application for monitoring and managing security events in real-time.
+              Combines .NET MVC with MySQL and cybersecurity techniques for a compact SOC
+              dashboard.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">.NET MVC</span>
+              <span class="proj-tag">MySQL</span>
+              <span class="proj-tag">Cybersecurity</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- API Creator -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#a855f7">
+            <div class="proj-icon">⚡</div>
+            <div class="proj-title">API Creator</div>
+            <div class="proj-desc">
+              A desktop tool built with .NET MVC and Visual Studio that lets developers
+              scaffold, configure, and test REST APIs without leaving a familiar IDE-like
+              interface.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">.NET MVC</span>
+              <span class="proj-tag">Visual Studio</span>
+              <span class="proj-tag">REST API</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Pizza Ordering App -->
         <div class="col-12 col-md-6 col-xl-4">
           <div class="et-card proj-card" style="--proj-color:#ef4444">
@@ -197,9 +249,50 @@
           </div>
         </div>
 
-        <!-- RSA -->
+        <!-- User Registration -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#06b6d4">
+            <div class="proj-icon">🧍</div>
+            <div class="proj-title">User Registration</div>
+            <div class="proj-desc">
+              A backend-focused project featuring <code>DtoUser</code>, <code>DtoUserValidator</code>
+              with FluentValidation, and a MySQL data layer with <code>getItem()</code> queries.
+              Explores Azure SQL migration with EF Core.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">C# .NET</span>
+              <span class="proj-tag">MySQL</span>
+              <span class="proj-tag">Azure SQL</span>
+            </div>
+          </div>
+        </div>
 
-      </div>
+        <!-- RSA Encryption -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="et-card proj-card" style="--proj-color:#f43f5e">
+            <div class="proj-icon">🔐</div>
+            <div class="proj-title">
+              RSA Encryption
+              <a href="https://github.com/Hamza928505/RSA"
+                 target="_blank" rel="noopener"
+                 class="proj-github-link">↗ GitHub</a>
+            </div>
+            <div class="proj-desc">
+              An interactive C++ terminal app implementing RSA from scratch using the NTL library.
+              Enter or auto-generate 256-bit primes, compute φ(n), pick a public exponent <code>e</code>,
+              derive private key <code>d</code> via modular inverse, then encrypt and decrypt
+              integers and full strings with <code>PowerMod</code>.
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="proj-tag">C++17</span>
+              <span class="proj-tag">NTL</span>
+              <span class="proj-tag">Cryptography</span>
+              <span class="proj-tag">Code::Blocks</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /row projects -->
 
       <!-- ══════════════════════════════════════════════════════
            APP STATS STRIP
