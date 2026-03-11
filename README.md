@@ -145,9 +145,6 @@ python3 -m http.server 8080
 
 ---
 
-## 👤 Author
-
-**Hamza Salameh**
 - LinkedIn — [Hamza Salameh](https://www.linkedin.com/in/HamzaSalameh)
 
 ---
