@@ -145,7 +145,7 @@ python3 -m http.server 8080
 
 ---
 
-- LinkedIn — [Hamza Salameh](https://www.linkedin.com/in/HamzaSalameh)
+- LinkedIn — [Hamza Salameh](https://www.linkedin.com/in/hamza-salameh-287a53258)
 
 ---
 
