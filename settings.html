@@ -1,29 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>  <meta charset="UTF-8"/>
-  <!-- ── PWA / Home-screen icon support ── -->
-  <link rel="manifest" href="manifest.json"/>
-  <!-- iOS Safari -->
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="ExpenseTracker"/>
-  <link rel="apple-touch-icon" href="data:image/png;base64,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"/>
-  <!-- Android / Chrome — inline base64 so icon loads from file:// too -->
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="theme-color" content="#e8a020"/>
-  <!-- Standard favicons — inline base64 -->
-  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABx0lEQVR42t2XPUvDUBSG3xtr0VrUhMBtl2J0lGYSXDu6KPgLWlx1sqOzg/4AcTT/wN1FXATXgpPQ0kUvhCRDqaKhuiTtbZtoc/OheCAckpD7vOcjNzkEAfZytfaJlKzU6BD+nASBLauXFh+KUhwTImUJ59f3eSQMXjt1E4ffnuSmMjEU4MPTAIcJUZQiJB6etVlWb9QDItEz0x4eUYzn5ESU+8D78wrW6dzYNarKkdaSRNN3vF/C2fUrDi56eHcBZmhC60gi0TNDgzsACAGOdhaQ9/LIDC1yOYQzsLeVR21zHpc3b+iaA+FGzIk+ePf4gYcnF8uLBKtLJDsBVJXBTBuH0LBrDlBRR0mk9XZ2TUjr7Sl4ZiXwo+QbLmrksXsgDjSREiRl/1sAM+3nXxPgw38SISUNZabdYqbdYoZW9rbnciYCuEhVqsrVWeCxX0MPanqnFQB9AIXUmpCrayso4qjwSAL4pqKqXPW//6L/ATOVYCLFBe/oD+/HhH+bgZAU91PdiPj/dmZoXd6nNR9IpUaH+EMCb3rT2WaG1tWbzrb34dngvd50yrynqrzCe73pgPdhY9rfmIyynA0nB1RpcmwOKkea0/EXK43ifu3TBMUAAAAASUVORK5CYII="/>
-  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA2ElEQVR42mNkYGBguNYn8p+BTMAI0+zQ+odkzQeqWSAGkKMZBpjwSdo7ODJYWVkzPH72gnQDEpOSGRgZGRnSDC8ysLGxM7x88540A8LCIxisBI8zzNj9g+F0rzzpLti9exfDnqd6DOwsjAyqyRdxGsCCS6Kvp5vhxOmzDIqKSgwMDAwM4iKCpBnAwMDAYGFqTFksoIOXb94/J8uAl2/eP4dpRjeECZ9NyBrhcgsVJXGGAbJiLM7lerlQkR+nF7Bo+Aa1kYGBgYGLYCCKiwhKQjU8QtNM29wIAJsDXC7npphmAAAAAElFTkSuQmCC"/>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <!-- Bootstrap 5.3 -->
-  <link  rel="stylesheet" href="libs/bootstrap.min.css"/>
+  <title>Settings · ExpenseTracker</title>
+  <meta name="description" content="Theme, currencies, stored data, and the built-in currency converter."/>
+
+  <!-- Apply the stored theme before first paint so there is no flash of the wrong one -->
+  <script>
+    (function () {
+      try {
+        document.documentElement.setAttribute(
+          'data-theme',
+          localStorage.getItem('et_theme') === 'dark' ? 'dark' : 'light'
+        );
+      } catch (e) { /* private mode — fall back to light */ }
+    })();
+  </script>
+
+  <!-- PWA / home-screen icons (inline base64 so they resolve from file:// too) -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="ExpenseTracker"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#f6f6f4"/>
+  <link rel="apple-touch-icon" href="data:image/png;base64,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"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEQklEQVR42s2XXYhVVRTHf3ufc+65987c7oyaXwjDNJEMk2QYZdQU+VAU+JJCklDPRVk9RC899hKEYPRWERYqPhqRQh8io6Bg6YzIjKHohKmj0+1+eD/Ox96rhztjCfeeO6O3j7U5j2ev/17/tf5rLSUiIlgUmsBWOVs7wnRjnIr5HYuhG6ZxyDlLGUg/xEj2aXzdw7xPZcWIQnMlPMfR0l6K8XUc5eIoB1B0xwQjBiMxfe5ynsy/zOrU2iYIEZGr4S98W/gYAE/5yNzppqm5E0kAwAtLdrAq9QA6sFXGSntuObfYrjtvxkCwWDzlAzBW2kNgq+jJ2hhFM4On0lgs/7Q1QaQpmhkma2Poi8FpHDzkX3D+VzQsDh4Xg9O4FTOLo5zEsIsIYhdBi1JorRLpcJRDxcziWjGJ2S4iuK6Dn011LgoBpcDElkYt7JiWVgxu4n0ieL5HabbCxNfjBPUQpRIfjolh5UA/Dz5xPybuTKvb6eWl2Qq73tzH9GSZdBZkAUxYA69/tJmHnxmmXg0S6WgPwAp+NsXEgVP8OlXmvc+3ct+6NQS1ENXiQhHBS7kUZkp8sP1LCldLpDIetUodtLN4APMWhTGOp7gwcZmgHhEFEUq1BuC4DjeLVRwPLp+/QfF6GS/lYoxt+c+CAABoR/jms+NEQZPnJBq0hmwOjh6YpDBT5I2d29o67wxAzb3MgR27ttLTl8WEMW0zUYQ4tmSyPt/vO87Ph89RLTfoyWcwsWkJxF2gcrByYCnL1vQTBXFbClzPwUu55L1eTh+ZQmtwXU2SsrsL1ZYwiAhqYUsA8+V6/VqBk99NYa1h6uQlQFOvBmRyaYy5SwBKKZSe+/4GQARcz+FmscYn7+xnerJMphf8jCKowcHdx3j1/c2EQdySOfeudd1a0tk0Jw6eYXqyzLufbmHtI4NYY9j52ldcuXADa6Rt2rhdaPRYY8n1ZwE4c+w8lUIVASp/BNyzJJ0o4XcNQGtNoxoysnGI515Zxw/7xhEZR+tmsWx6aQNKK0TkzqtAqaYyWmOxLURFAImErW89y1MvbsBLeRzafYxTh6fY+Py6tpWzIABiBSsKP5sit6SHsBGhlW7dsgUGhlfT5+c4sXwCYyxRGOOlvTugQClsbFk1eC9BTdj74SFWDy0jCgwt/N8KhbWCn/Y4e/wieq5q7qgbaq2oVwNGHh9iy47H+HH/Kc79dKmjFM9HWqkUm7Y9Sm8+S9imfwCoL6693bHB+pkU1XKdODKJ88BtSaEUvfkMURQnK6HGwRInTkX1akDKd/HT3qLm5aSXg6CVi5tzl1GIfsNVXtu5UGuFNbLIwVW1DzuKWGLy7kr0oL8eQ4RCdxQcpdQivqSrNIaIQX89ejg7Sp+zgkga6E4gurInaiJp0OesYDg7ivZ1D6P57c3pRwI0GtW1nfD2sDedN1ez0fx2fN3zP1lO/8v1/E8obhvLHXyepAAAAABJRU5ErkJggg=="/>
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACOUlEQVR42qWTT0tUURjGf++5514HZ5wahZyNaGiLREQEo4hoIRRtEr+Dn6Rv0L4P0KKNBRGE0KbQjDKLWYwWRmoqMqPz5965d+69b4tBHfsDQS8czns2v/M8532OqKputdZYbTylmVT5l8o6BWZy9xnJTCFbwZouHT1CAUcsqooqCKB07QIiAkCiMQLMXlzArjYWURRXekg0wcu4uF4H1F1Rq03STkHAikesIauNRWwjqeKIR6IJrmfZLu+z962KdeUMoobh8SL5gSyaKCopjrg0kioWQDXFy7hsl/d58vAlV6Yvk8RtAKxnOdyp83m5zMKDeWqVJsYxp8pMBwCOdTg6rHNcCWiHEa1mROhHBPUWQkz5/Q6lla/09HpoembPnjSCkKbKyNUi1+9N0qz5GGNQgf7BPG9flPj0eoPxG6OEfoQg5wEIpHFKX6GXsakh6pUmjucQBW2WHq+w8WGP/IBLFLRPp3FqofuUxAlBI8RvtEjjlM2P31l+vs7U7VEqP47xay2MNb9bAEgTxcu45PuygGIcw8TNMdrhLG+elRgcHiBX6MWvBxhjzgACpGlKNp9hq7TLq8V3tPwQEUEV+ot5+os5MlmLdZ1OsroViBFCP2JscohrdyfYXN/B7crB7pcD3B7LzJ0JgkaIGPmLhVS5NT+NYw2/BBEBAj8ijpJzj2hzToHj+AArPSgpzVpwTuI5iBFEBMEQa8gFewkzk5tDEGKNOoMwBuP8eZ3cHGsnBzO5OeR/v/NPVuEMtfwQIukAAAAASUVORK5CYII="/>
+
+  <!-- Bootstrap 5.3 — grid and spacing utilities only -->
+  <link rel="stylesheet" href="libs/bootstrap.min.css"/>
   <script src="libs/bootstrap.bundle.min.js" defer></script>
 
-  <!-- Fonts -->
-  <link href="libs/font.css" rel="stylesheet"/>
+  <!-- Plus Jakarta Sans, served from libs/fonts -->
+  <link rel="stylesheet" href="libs/font.css"/>
 
   <!-- SweetAlert2 -->
-  <link  rel="stylesheet" href="libs/sweetalert2.min.css"/>
+  <link rel="stylesheet" href="libs/sweetalert2.min.css"/>
   <script src="libs/sweetalert2.all.min.js"></script>
 
   <!-- App styles -->
@@ -35,30 +49,29 @@
 <div class="app-shell">
 
   <!-- ════════════════════════════════════════
-       SIDEBAR  (lg and above)
+       SIDEBAR — lg and above
        ════════════════════════════════════════ -->
   <aside class="et-sidebar">
     <a href="index.html" class="sb-logo">
-      <div class="logo-icon">💰</div>
-      <div>
-        <div class="logo-text">Expense<span>Tracker</span></div>
-        <div class="logo-sub">Personal Finance</div>
-      </div>
+      <span class="logo-mark"><i data-icon="wallet"></i></span>
+      <span>
+        <span class="logo-text d-block">ExpenseTracker</span>
+        <span class="logo-sub d-block">Personal finance</span>
+      </span>
     </a>
 
-    <nav class="sb-nav d-flex flex-column">
-      <a href="index.html"        class="sb-link"><span class="sb-icon">🏠</span> Dashboard</a>
-      <a href="transactions.html" class="sb-link"><span class="sb-icon">📋</span> Transactions</a>
-      <a href="about.html"        class="sb-link"><span class="sb-icon">👤</span> About</a>
-      <a href="settings.html"     class="sb-link active"><span class="sb-icon">⚙️</span> Settings</a>
-      <button class="sb-add-btn" onclick="openSheet()"><span class="sb-icon">＋</span> Add Transaction</button>
+    <nav class="sb-nav" aria-label="Main">
+      <a href="index.html"        class="sb-link"><i data-icon="home"></i> Home</a>
+      <a href="transactions.html" class="sb-link"><i data-icon="receipt"></i> Transactions</a>
+      <a href="settings.html"     class="sb-link active" aria-current="page"><i data-icon="settings"></i> Settings</a>
+      <button class="sb-add-btn" onclick="openSheet()"><i data-icon="plus"></i> Add transaction</button>
     </nav>
 
     <div class="sb-bottom">
-      <div class="d-flex align-items-center justify-content-between px-1 pb-1">
-        <span class="set-label" style="font-size:.82rem; color:var(--text2)">Dark Mode</span>
+      <div class="sb-theme-row">
+        <span>Dark mode</span>
         <label class="et-toggle">
-          <input type="checkbox" id="darkToggle" onchange="toggleTheme()"/>
+          <input type="checkbox" id="darkToggle" onchange="toggleTheme()" aria-label="Dark mode"/>
           <span class="et-toggle-track"></span>
         </label>
       </div>
@@ -66,150 +79,269 @@
     </div>
   </aside>
 
-  <!-- ════════════════════════════════════════
-       MAIN
-       ════════════════════════════════════════ -->
   <div class="et-main">
 
-    <!-- ── TOPBAR ── -->
-    <div class="et-topbar">
-      <div class="topbar-title">Settings</div>
+    <header class="et-topbar">
+      <h1 class="topbar-title">Settings</h1>
       <div class="topbar-right">
-        <!-- No month pill on settings page -->
-        <button class="theme-btn-top" id="themeBtn" onclick="toggleTheme()">🌙</button>
+        <button class="icon-btn theme-btn-top" id="themeBtn" onclick="toggleTheme()" aria-label="Switch theme"><i data-icon="moon"></i></button>
       </div>
-    </div>
+    </header>
 
-    <!-- ── PAGE CONTENT ── -->
     <div class="page-wrap flex-grow-1">
-
-      <!--
-        Settings form centred and capped in width:
-          xs:   col-12               → full width
-          sm:   col-12               → full width
-          md:   col-10 offset-1      → slight inset
-          lg:   col-8  offset-2      → centred, comfortable
-          xl:   col-6  offset-3      → centred, narrower
-          xxl:  col-5  offset-3-ish  → max comfortable reading width
-      -->
       <div class="row">
-        <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 col-xxl-5 offset-xxl-3">
+        <div class="col-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2 col-xxl-6 offset-xxl-3">
 
-          <!-- PREFERENCES -->
-          <div class="sec-title mb-2 mb-sm-3">Preferences</div>
-          <div class="et-card mb-3 mb-sm-4">
+          <!-- ── PREFERENCES ── -->
+          <h2 class="sec-title mb-2 mb-md-3">Preferences</h2>
+          <div class="et-card mb-4">
 
-            <!-- Dark mode toggle -->
             <div class="set-item">
-              <div class="d-flex align-items-center gap-3">
-                <div class="set-ico">🌗</div>
+              <div class="set-left">
+                <span class="set-ico"><i data-icon="themeSwitch"></i></span>
                 <div>
-                  <div class="set-label">Dark Mode</div>
-                  <div class="set-sub">Toggle light / dark theme</div>
+                  <div class="set-label">Dark mode</div>
+                  <div class="set-sub">Use the dark theme</div>
                 </div>
               </div>
               <label class="et-toggle">
-                <input type="checkbox" id="darkToggle" onchange="toggleTheme()"/>
+                <input type="checkbox" id="darkToggle" onchange="toggleTheme()" aria-label="Dark mode"/>
                 <span class="et-toggle-track"></span>
               </label>
             </div>
 
-            <!-- Storage info -->
             <div class="set-item">
-              <div class="d-flex align-items-center gap-3">
-                <div class="set-ico">💾</div>
+              <div class="set-left">
+                <span class="set-ico"><i data-icon="drive"></i></span>
                 <div>
                   <div class="set-label">Storage</div>
-                  <div class="set-sub">localStorage — browser only, no server</div>
+                  <div class="set-sub">This browser only. No account, no server.</div>
                 </div>
               </div>
             </div>
 
-          </div><!-- /et-card preferences -->
+          </div>
 
-          <!-- DATA -->
-          <div class="sec-title mb-2 mb-sm-3">Data</div>
-          <div class="et-card mb-3 mb-sm-4">
+          <!-- ── CURRENCIES ── -->
+          <h2 class="sec-title mb-2 mb-md-3" id="currencies">Currencies</h2>
+          <div class="et-card mb-4">
 
-            <!-- Total entries -->
             <div class="set-item">
-              <div class="d-flex align-items-center gap-3">
-                <div class="set-ico">📊</div>
+              <div class="set-left">
+                <span class="set-ico set-ico-flag" data-cur-flag="base"><i data-icon="bank"></i></span>
                 <div>
-                  <div class="set-label">Total Entries</div>
+                  <label class="set-label" for="baseCurrencySelect">Main currency</label>
+                  <div class="set-sub">What your amounts are stored in</div>
+                </div>
+              </div>
+              <select class="set-select" id="baseCurrencySelect" onchange="updateBaseCurrency()">
+                <option value="JOD">JOD</option>
+              </select>
+            </div>
+
+            <div class="set-item">
+              <div class="set-left">
+                <span class="set-ico set-ico-flag" data-cur-flag="display"><i data-icon="exchange"></i></span>
+                <div>
+                  <label class="set-label" for="displayCurrencySelect">Showing amounts in</label>
+                  <div class="set-sub">What every figure is converted to</div>
+                </div>
+              </div>
+              <select class="set-select" id="displayCurrencySelect" onchange="updateDisplayCurrency()">
+                <option value="JOD">JOD</option>
+              </select>
+            </div>
+
+            <div class="set-block">
+              <div class="set-label">Quick switch</div>
+              <div class="set-sub mb-3">
+                These sit under your balance. Tap one — or the balance itself — to flip
+                between them without leaving the page.
+              </div>
+
+              <div class="wallet-list" id="walletList"></div>
+
+              <div class="wallet-add">
+                <label class="sr-only" for="walletAddSelect">Currency to add</label>
+                <select class="et-select" id="walletAddSelect">
+                  <option value="USD">USD</option>
+                </select>
+                <button class="et-btn-quiet" onclick="addSelectedWalletCurrency()">
+                  <i data-icon="plus"></i>Add
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ── CATEGORIES ── -->
+          <h2 class="sec-title mb-2 mb-md-3" id="categories">Categories</h2>
+
+          <div class="et-card mb-3">
+            <div class="cat-head">
+              <div>
+                <div class="set-label">Money in</div>
+                <div class="set-sub">Where your income comes from</div>
+              </div>
+              <button class="et-btn-quiet" onclick="openCategoryDialog('income')">
+                <i data-icon="plus"></i>Add
+              </button>
+            </div>
+            <div class="cat-list" id="catListIncome"></div>
+          </div>
+
+          <div class="et-card mb-4">
+            <div class="cat-head">
+              <div>
+                <div class="set-label">Money out</div>
+                <div class="set-sub">What you spend on</div>
+              </div>
+              <button class="et-btn-quiet" onclick="openCategoryDialog('expense')">
+                <i data-icon="plus"></i>Add
+              </button>
+            </div>
+            <div class="cat-list" id="catListExpense"></div>
+          </div>
+
+          <!-- ── YOUR DATA ── -->
+          <h2 class="sec-title mb-2 mb-md-3">Your data</h2>
+          <div class="et-card mb-4">
+
+            <div class="set-item">
+              <div class="set-left">
+                <span class="set-ico"><i data-icon="barChart"></i></span>
+                <div>
+                  <div class="set-label">Total transactions</div>
                   <div class="set-sub" id="totalEntries">0 transactions</div>
                 </div>
               </div>
             </div>
 
-            <!-- This month -->
             <div class="set-item">
-              <div class="d-flex align-items-center gap-3">
-                <div class="set-ico">📅</div>
+              <div class="set-left">
+                <span class="set-ico"><i data-icon="calendar"></i></span>
                 <div>
-                  <div class="set-label">This Month</div>
+                  <div class="set-label">This month</div>
                   <div class="set-sub" id="monthSummary">—</div>
                 </div>
               </div>
             </div>
 
-          </div><!-- /et-card data -->
-
-          <!-- DANGER ZONE -->
-          <button class="et-btn-danger mb-2 mb-sm-3" onclick="clearAll()">🗑 Clear All Data</button>
-
-          <div class="settings-footer pb-4">
-            ExpenseTracker v2.0<br/>
-            Data stored locally in your browser.<br/>
-            No accounts. No servers. No tracking.
           </div>
 
-        </div><!-- /col -->
-      </div><!-- /row -->
+          <!-- ── CONVERTER ── -->
+          <h2 class="sec-title mb-2 mb-md-3">Currency converter</h2>
+          <div class="et-card mb-4">
+            <div class="p-3 p-md-4">
+              <div class="row g-3 align-items-end">
+                <div class="col-12 col-sm-4">
+                  <label class="et-label" for="convAmount">Amount</label>
+                  <input type="number" class="et-input" id="convAmount" value="1" min="0.01" step="0.01" inputmode="decimal"/>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <label class="et-label" for="convFrom">From</label>
+                  <select class="et-select" id="convFrom">
+                    <option value="JOD">JOD</option>
+                  </select>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <label class="et-label" for="convTo">To</label>
+                  <select class="et-select" id="convTo">
+                    <option value="USD">USD</option>
+                  </select>
+                </div>
+              </div>
 
-    </div><!-- /page-wrap -->
-  </div><!-- /et-main -->
-</div><!-- /app-shell -->
+              <button class="et-btn-accent mt-4" onclick="convertCurrency()">Convert</button>
 
-<!-- BOTTOM NAV -->
-<nav class="et-bottom-nav">
-  <a href="index.html"        class="bnav-btn"><span class="bnav-icon">🏠</span>Dashboard</a>
-  <a href="transactions.html" class="bnav-btn"><span class="bnav-icon">📋</span>Transactions</a>
-  <button class="bnav-btn bnav-add" onclick="openSheet()" aria-label="Add transaction">
-    <span class="bnav-add-icon">＋</span>
+              <div class="conv-result" id="convResult" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <!-- ── DANGER ZONE — kept apart from everything else ── -->
+          <h2 class="sec-title mb-2 mb-md-3">Danger zone</h2>
+          <button class="et-btn-danger" onclick="clearAll()"><i data-icon="trash"></i>Delete all data</button>
+
+          <p class="settings-footer">
+            ExpenseTracker v2.0<br/>
+            Your data stays in this browser. No accounts, no servers, no tracking.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BOTTOM NAV — xs to md
+     ════════════════════════════════════════ -->
+<nav class="et-bottom-nav" aria-label="Main">
+  <a href="index.html"        class="bnav-btn"><i data-icon="home"></i>Home</a>
+  <a href="transactions.html" class="bnav-btn"><i data-icon="receipt"></i>Transactions</a>
+  <button class="bnav-btn bnav-add" onclick="openSheet()">
+    <span class="bnav-add-icon"><i data-icon="plus"></i></span>
     <span>Add</span>
   </button>
-  <a href="settings.html"     class="bnav-btn active"><span class="bnav-icon">⚙️</span>Settings</a>
-  <a href="about.html"        class="bnav-btn"><span class="bnav-icon">👤</span>About</a>
+  <a href="settings.html"     class="bnav-btn active" aria-current="page"><i data-icon="settings"></i>Settings</a>
 </nav>
 
-<!-- ADD TRANSACTION SHEET -->
+<!-- ════════════════════════════════════════
+     ADD TRANSACTION — bottom sheet on mobile, centred dialog on md+
+     ════════════════════════════════════════ -->
 <div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
-<div class="sheet" id="addSheet">
+<div class="sheet" id="addSheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden="true">
   <div class="sheet-handle"></div>
-  <div class="sheet-title">New Transaction</div>
+
+  <div class="sheet-head">
+    <h2 class="sheet-title" id="sheetTitle">New transaction</h2>
+    <button class="icon-btn" onclick="closeSheet()" aria-label="Close"><i data-icon="x"></i></button>
+  </div>
+
   <div class="sheet-body">
-    <div class="type-seg">
-      <button class="type-seg-btn sel-inc" id="btnInc" onclick="setType('income')">＋ Income</button>
-      <button class="type-seg-btn"         id="btnExp" onclick="setType('expense')">－ Expense</button>
+    <div class="type-seg" role="group" aria-label="Transaction type">
+      <button class="type-seg-btn sel-inc" id="btnInc" onclick="setType('income')" aria-pressed="true"><i data-icon="arrowIn"></i>Money in</button>
+      <button class="type-seg-btn"         id="btnExp" onclick="setType('expense')" aria-pressed="false"><i data-icon="arrowOut"></i>Money out</button>
     </div>
-    <div>
-      <label class="et-label">Amount</label>
-      <input class="et-input big" id="fAmt" type="number" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal"/>
+
+    <div class="et-field">
+      <label class="et-label" for="fAmt">Amount</label>
+      <div class="amount-field">
+        <input class="et-input big" id="fAmt" type="number" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal" autocomplete="off"/>
+        <span class="amount-cur" id="fAmtCur">JOD</span>
+      </div>
+      <div class="amount-note" id="fAmtNote" hidden></div>
     </div>
-    <div>
-      <label class="et-label">Description (optional)</label>
-      <input class="et-input" id="fDesc" type="text" placeholder="What was this for?"/>
+
+    <div class="et-field">
+      <label class="et-label" for="fDesc">Description <span style="font-weight:500">(optional)</span></label>
+      <input class="et-input" id="fDesc" type="text" placeholder="What was this for?" autocomplete="off"/>
     </div>
-    <div>
-      <label class="et-label">Category</label>
-      <select class="et-select" id="fCat"></select>
+
+    <div class="et-field">
+      <div class="et-label-row">
+        <span class="et-label" id="fCatLabel">Category</span>
+        <button type="button" class="link-btn" onclick="openCategoryDialog(mode)">
+          <i data-icon="plus"></i>New category
+        </button>
+      </div>
+      <div class="cat-picker" id="fCatPicker" role="radiogroup" aria-labelledby="fCatLabel"></div>
     </div>
-    <div>
-      <label class="et-label">Date</label>
+
+    <div class="et-field">
+      <label class="et-label" for="fDate">Date</label>
       <input class="et-input" id="fDate" type="date"/>
     </div>
-    <button class="et-btn-accent" onclick="addTx()">Add Transaction</button>
+
+    <label class="check-row" for="fRecurring">
+      <input type="checkbox" id="fRecurring"/>
+      <span>
+        <span class="check-text d-block">Repeat monthly</span>
+        <span class="check-sub d-block">We will add it again each month</span>
+      </span>
+    </label>
+
+    <button class="et-btn-accent" onclick="addTx()">Add transaction</button>
   </div>
 </div>
 

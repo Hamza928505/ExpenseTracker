@@ -1,7 +1,9 @@
 /* ============================================================
    transactions.css — Transactions page
-   Additional styles beyond shared.css.
+   Everything this page needs lives in shared.css; kept as the
+   page-level hook for future one-off rules.
    ============================================================ */
 
-/* Nothing page-specific beyond shared.css at this time.
-   Kept as a placeholder for future customisations. */
+/* The list is a single rounded card — clip the day headings and
+   row hover states to its corners. */
+#txList { overflow: hidden; }

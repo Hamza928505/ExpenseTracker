@@ -1,17 +1,18 @@
 /* ============================================================
-   index.css — Dashboard page
-   Uses min-width media queries (mobile-first).
+   index.css — Home page
+   Mobile-first: min-width media queries only.
    ============================================================ */
 
-/* ── BREAKDOWN CARD ── */
-/* xs: no sticky, normal flow */
-.breakdown-col { }
-
-/* xl >= 1200px: sticky so it stays in view while scrolling charts */
+/* Breakdown column tracks the charts on wide screens instead of
+   scrolling away above them. */
 @media (min-width: 1200px) {
   .breakdown-col {
     position: sticky;
-    top: calc(56px + 16px);   /* topbar height + gap */
+    top: calc(var(--topbar-h) + 20px);
     align-self: flex-start;
   }
 }
+
+/* Bootstrap's .min-w-0 does not exist in 5.3 — the stat card body
+   needs it so long amounts can shrink rather than overflow. */
+.stat-card .min-w-0 { min-width: 0; }
