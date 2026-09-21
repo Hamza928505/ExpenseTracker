@@ -83,7 +83,7 @@ function render() {
         <div class="br-body">
           <div class="br-top">
             <span class="br-name">${esc(catLabel(cat))}</span>
-            <span class="br-val">${fmt(amt)}</span>
+            <span class="br-val">${esc(fmt(amt))}</span>
           </div>
           <div class="br-track">
             <div class="br-fill" style="width:${(amt / mx * 100).toFixed(1)}%;background:${catColor(cat)}"></div>

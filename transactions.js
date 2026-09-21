@@ -115,7 +115,7 @@ function render() {
             <div class="tx-meta">${esc(catLabel(t.category))} · ${isIncome ? 'Money in' : 'Money out'}${taxHtml}</div>
           </div>
           <div class="tx-right">
-            <div class="tx-amount ${isIncome ? 'inc' : ''}">${isIncome ? '+' : '−'}${fmt(t.amount)}</div>
+            <div class="tx-amount ${isIncome ? 'inc' : ''}">${isIncome ? '+' : '−'}${esc(fmt(t.amount))}</div>
             <button class="tx-edit" onclick="editTx(${t.id})"
                     aria-label="Edit ${esc(t.desc || catLabel(t.category))}">${icon('edit')}</button>
             <button class="tx-del" onclick="delTx(${t.id})"
