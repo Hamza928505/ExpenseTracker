@@ -12,6 +12,7 @@ let text = 'متجر عمان\nضريبة القيمة المضافة 9616 4.00\
 let recognitionError;
 let releaseRecognition;
 const workers = [];
+const recognizedOptions = [];
 const context = vm.createContext({
   document: { getElementById: id => elements[id] },
   window: { Tesseract: { createWorker: async (languages, oem, options) => {
@@ -19,10 +20,11 @@ const context = vm.createContext({
       languages, oem, options, terminated: false,
       setParameters: async () => {},
       detect: async () => ({ data: { script: 'Arabic' } }),
-      recognize: async () => {
+      recognize: async (_image, options) => {
+        recognizedOptions.push(options);
         if (recognitionError) throw recognitionError;
-        if (releaseRecognition) await new Promise(resolve => { releaseRecognition = resolve; });
-        return { data: { text, confidence: 90 } };
+        if (releaseRecognition === true) await new Promise(resolve => { releaseRecognition = resolve; });
+        return { data: { text, confidence: 90, options } };
       },
       terminate: async () => { worker.terminated = true; },
     };
@@ -35,6 +37,27 @@ vm.runInContext(fs.readFileSync('invoice.js', 'utf8'), context);
 const scan = () => context.scanInvoice({ files: [{ type: 'image/png', size: 100 }], value: 'invoice.png' });
 
 (async () => {
+  let bitmapClosed = false;
+  let drawArgs;
+  context.createImageBitmap = async () => ({ width: 500, height: 1000, close() { bitmapClosed = true; } });
+  context.document.createElement = tag => {
+    assert.equal(tag, 'canvas');
+    return {
+      getContext: () => ({
+        set imageSmoothingEnabled(value) { assert.equal(value, true); },
+        set imageSmoothingQuality(value) { assert.equal(value, 'high'); },
+        set filter(value) { assert.equal(value, 'grayscale(1) contrast(1.35)'); },
+        drawImage(...args) { drawArgs = args; },
+      }),
+    };
+  };
+  const prepared = await context.prepareInvoiceImage({ type: 'image/jpeg' });
+  assert.deepEqual(JSON.parse(JSON.stringify([prepared.width, prepared.height])), [1200, 2400]);
+  assert.equal(drawArgs.at(-2), 1200);
+  assert.equal(drawArgs.at(-1), 2400);
+  assert.equal(bitmapClosed, true);
+  delete context.createImageBitmap;
+
   await scan();
   assert.equal(workers[0].languages, 'osd');
   assert.equal(workers[0].oem, 0);
@@ -45,6 +68,10 @@ const scan = () => context.scanInvoice({ files: [{ type: 'image/png', size: 100 
   assert.equal(elements.fScanText.textContent, text);
   assert.equal(elements.fScanPreview.hidden, false);
   assert.equal(elements.fSubmitBtn.disabled, false);
+
+  text = 'Shop\nGrand Total 29.00';
+  await scan();
+  assert.equal(recognizedOptions.at(-1).tessedit_pageseg_mode, '6');
 
   elements.fScanLang.value = 'ara';
   text = '';
