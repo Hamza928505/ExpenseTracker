@@ -60,6 +60,30 @@ let invoiceOcrWorker;
 let invoiceOcrWorkerLanguages = '';
 let invoiceScanId = 0;
 
+async function prepareInvoiceImage(file) {
+  if (typeof createImageBitmap !== 'function' || typeof document === 'undefined') return file;
+  let bitmap;
+  try {
+    bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+    const longest = Math.max(bitmap.width, bitmap.height);
+    const shortest = Math.min(bitmap.width, bitmap.height);
+    const scale = Math.min(2400 / longest, Math.max(1, 1600 / shortest));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    const context = canvas.getContext('2d');
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.filter = 'grayscale(1) contrast(1.35)';
+    context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    return canvas;
+  } catch (_) {
+    return file;
+  } finally {
+    bitmap?.close?.();
+  }
+}
+
 function invoiceDigits(value) {
   return String(value || '').normalize('NFKC')
     .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\u0640\u064b-\u065f]/g, '')
@@ -205,6 +229,11 @@ function parseInvoiceText(text) {
   };
 }
 
+function invoiceResultScore(result, parsed) {
+  return (parsed.amount ? 100 : 0) + (parsed.tax ? 20 : 0) + (parsed.date ? 10 : 0) +
+    (parsed.description ? 5 : 0) + Math.max(0, Number(result.data.confidence) || 0) / 100;
+}
+
 function setInvoiceStatus(message, error) {
   const status = document.getElementById('fScanStatus');
   if (!status) return;
@@ -308,7 +337,7 @@ function invoiceLanguageForScript(script) {
   return INVOICE_SCRIPT_DEFAULTS[script] || localeLanguage || 'eng';
 }
 
-async function detectInvoiceLanguage(Tesseract, file) {
+async function detectInvoiceLanguage(Tesseract, image) {
   const fallback = invoiceLocaleLanguage();
   let detector;
   try {
@@ -319,7 +348,7 @@ async function detectInvoiceLanguage(Tesseract, file) {
       legacyLang: true,
     });
     await detector.setParameters({ user_defined_dpi: '300' });
-    const result = await invoiceOcrTimeout(detector.detect(file));
+    const result = await invoiceOcrTimeout(detector.detect(image));
     const language = invoiceLanguageForScript(result.data.script);
     setInvoiceStatus(`Detected ${result.data.script || 'text'}; scanning as ${invoiceLanguageName(language)}…`);
     return language;
@@ -394,27 +423,29 @@ async function scanInvoice(input) {
   const preview = document.getElementById('fScanPreview');
   const submit = document.getElementById('fSubmitBtn');
   try {
-    if (!file.type.startsWith('image/')) throw new Error('Choose an invoice photo or image.');
-    if (file.size > 15 * 1024 * 1024) throw new Error('Choose an image smaller than 15 MB.');
+    if (file.type && !file.type.startsWith('image/')) throw new Error('Choose an invoice photo or image.');
+    if (file.size > 25 * 1024 * 1024) throw new Error('Choose an image smaller than 25 MB.');
 
     button.disabled = true;
     submit.disabled = true;
     preview.hidden = true;
     preview.open = false;
+    setInvoiceStatus('Improving invoice photo…');
+    const image = await prepareInvoiceImage(file);
     setInvoiceStatus('Preparing scanner…');
     const Tesseract = await loadInvoiceOcr();
     const selectedLanguage = document.getElementById('fScanLang')?.value || 'auto';
     const language = selectedLanguage === 'auto'
-      ? await detectInvoiceLanguage(Tesseract, file)
+      ? await detectInvoiceLanguage(Tesseract, image)
       : selectedLanguage;
     const worker = await getInvoiceWorker(Tesseract, language);
-    let result = await invoiceOcrTimeout(worker.recognize(file, { rotateAuto: true, user_defined_dpi: '300' }));
+    let result = await invoiceOcrTimeout(worker.recognize(image, { rotateAuto: true, user_defined_dpi: '300' }));
     let parsed = parseInvoiceText(result.data.text);
-    if (!parsed.amount) {
+    if (invoiceResultScore(result, parsed) < 115) {
       setInvoiceStatus('Trying a receipt layout…');
-      const retry = await invoiceOcrTimeout(worker.recognize(file, { tessedit_pageseg_mode: '6', rotateAuto: true, user_defined_dpi: '300' }));
+      const retry = await invoiceOcrTimeout(worker.recognize(image, { tessedit_pageseg_mode: '6', rotateAuto: true, user_defined_dpi: '300' }));
       const retryParsed = parseInvoiceText(retry.data.text);
-      if (retryParsed.amount || retry.data.confidence > result.data.confidence) {
+      if (invoiceResultScore(retry, retryParsed) > invoiceResultScore(result, parsed)) {
         result = retry;
         parsed = retryParsed;
       }
