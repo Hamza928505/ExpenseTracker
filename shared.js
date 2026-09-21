@@ -16,6 +16,7 @@ const ICONS = {
   plus:        '<path d="M5 12h14"/><path d="M12 5v14"/>',
   minus:       '<path d="M5 12h14"/>',
   x:           '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  edit:        '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
   trash:       '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
   chevronLeft: '<path d="m15 18-6-6 6-6"/>',
   chevronRight:'<path d="m9 18 6-6-6-6"/>',
@@ -919,6 +920,7 @@ function processRecurring() {
         id: Date.now() + Math.random(), // ensure unique id
         desc: rt.desc + ' (Auto)',
         amount: rt.amount,
+        tax: Number(rt.tax) || 0,
         type: rt.type,
         category: rt.category,
         date: newDate.toISOString().split('T')[0]
@@ -1079,8 +1081,27 @@ function pickCat(v) {
    ADD SHEET
    ============================================================ */
 let sheetOpener = null;
+let editingTxId = null;
 
-function openSheet() {
+function resetTransactionForm() {
+  document.getElementById('fAmt').value = '';
+  document.getElementById('fTax').value = '';
+  document.getElementById('fDesc').value = '';
+  document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('fRecurring').checked = false;
+  const status = document.getElementById('fScanStatus');
+  if (status) status.textContent = '';
+  const preview = document.getElementById('fScanPreview');
+  if (preview) preview.hidden = true;
+}
+
+function setTransactionSheetMode(editing) {
+  document.getElementById('sheetTitle').textContent = editing ? 'Edit transaction' : 'New transaction';
+  document.getElementById('fSubmitBtn').textContent = editing ? 'Save changes' : 'Add transaction';
+  document.getElementById('fRecurringRow').hidden = editing;
+}
+
+function showTransactionSheet() {
   sheetOpener = document.activeElement;
   document.getElementById('sheetOverlay').classList.add('on');
   const sheet = document.getElementById('addSheet');
@@ -1097,7 +1118,32 @@ function openSheet() {
   }, 300);
 }
 
+function openSheet() {
+  editingTxId = null;
+  setTransactionSheetMode(false);
+  resetTransactionForm();
+  showTransactionSheet();
+}
+
+function editTx(id) {
+  const tx = txs.find(t => t.id === id);
+  if (!tx) return;
+
+  resetTransactionForm();
+  editingTxId = id;
+  setTransactionSheetMode(true);
+  selectedCat = tx.category;
+  setType(tx.type);
+  document.getElementById('fAmt').value = Number((tx.amount * exchangeRate).toFixed(3));
+  document.getElementById('fTax').value = tx.tax ? Number((tx.tax * exchangeRate).toFixed(3)) : '';
+  document.getElementById('fDesc').value = tx.desc || '';
+  document.getElementById('fDate').value = tx.date;
+  document.getElementById('fRecurring').checked = false;
+  showTransactionSheet();
+}
+
 function closeSheet() {
+  if (typeof invoiceScanId !== 'undefined') invoiceScanId++;
   document.getElementById('sheetOverlay').classList.remove('on');
   const sheet = document.getElementById('addSheet');
   sheet.classList.remove('on');
@@ -1119,6 +1165,8 @@ document.addEventListener('keydown', e => {
 function updateAmountCurrency() {
   const cur = document.getElementById('fAmtCur');
   if (cur) cur.textContent = displayCurrency;
+  const taxCur = document.getElementById('fTaxCur');
+  if (taxCur) taxCur.textContent = displayCurrency;
 
   const note = document.getElementById('fAmtNote');
   if (!note) return;
@@ -1150,12 +1198,13 @@ function previewAmountInBase() {
    ============================================================ */
 function addTx() {
   const amt  = parseFloat(document.getElementById('fAmt').value);
+  const tax  = parseFloat(document.getElementById('fTax').value || '0');
   const desc = (document.getElementById('fDesc').value || '').trim();
   const cat  = selectedCat;
   const date = document.getElementById('fDate').value;
   const rec  = document.getElementById('fRecurring') ? document.getElementById('fRecurring').checked : false;
 
-  if (!amt || amt <= 0) {
+  if (!Number.isFinite(amt) || amt <= 0) {
     Swal.fire({
       title: 'Enter an amount',
       text:  'The amount needs to be greater than zero.',
@@ -1166,6 +1215,16 @@ function addTx() {
       const a = document.getElementById('fAmt');
       if (a) a.focus();
     });
+    return;
+  }
+
+  if (!Number.isFinite(tax) || tax < 0 || tax > amt) {
+    Swal.fire({
+      title: 'Check the tax amount',
+      text: 'Tax must be zero or more and cannot exceed the total amount.',
+      icon: 'error',
+      confirmButtonText: 'Got it',
+    }).then(() => document.getElementById('fTax').focus());
     return;
   }
 
@@ -1180,15 +1239,24 @@ function addTx() {
 
   // What was typed is in the display currency; the ledger is kept in the base
   const stored = amt / (exchangeRate || 1);
+  const storedTax = tax / (exchangeRate || 1);
+  const wasEditing = editingTxId !== null;
 
-  const txId = Date.now();
-  txs.unshift({ id: txId, desc, amount: stored, type: mode, category: cat, date });
+  const txId = wasEditing ? editingTxId : Date.now();
+  if (wasEditing) {
+    const tx = txs.find(t => t.id === txId);
+    if (!tx) return;
+    Object.assign(tx, { desc, amount: stored, tax: storedTax, type: mode, category: cat, date });
+  } else {
+    txs.unshift({ id: txId, desc, amount: stored, tax: storedTax, type: mode, category: cat, date });
+  }
 
-  if (rec) {
+  if (!wasEditing && rec) {
     recurringTxs.push({
       id: txId,
       desc,
       amount: stored,
+      tax: storedTax,
       type: mode,
       category: cat,
       startDate: new Date(date).toISOString(),
@@ -1199,14 +1267,13 @@ function addTx() {
   save();
   if (typeof render === 'function') render();
 
-  document.getElementById('fAmt').value  = '';
-  document.getElementById('fDesc').value = '';
-  if (document.getElementById('fRecurring')) document.getElementById('fRecurring').checked = false;
+  resetTransactionForm();
+  editingTxId = null;
   closeSheet();
 
   Swal.fire({
-    title: mode === 'income' ? 'Money in' : 'Money out',
-    text:  desc ? `${fmt(stored)} — ${desc}` : fmt(stored),
+    title: wasEditing ? 'Transaction updated' : (mode === 'income' ? 'Money in' : 'Money out'),
+    text:  (desc ? `${fmt(stored)} — ${desc}` : fmt(stored)) + (storedTax ? ` · Tax ${fmt(storedTax)}` : ''),
     icon:  'success',
     timer: 1800,
     showConfirmButton: false,

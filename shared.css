@@ -1042,6 +1042,7 @@ body {
 }
 .tx-amount.inc { color: var(--pos); }
 
+.tx-edit,
 .tx-del {
   width: 44px;
   height: 44px;
@@ -1056,7 +1057,10 @@ body {
   flex-shrink: 0;
   transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
+.tx-edit .ic,
 .tx-del .ic { width: 17px; height: 17px; }
+.tx-edit:hover { background: var(--brand-tint); color: var(--forest); }
+[data-theme="dark"] .tx-edit:hover { color: var(--brand); }
 .tx-del:hover  { background: var(--neg-tint); color: var(--neg); }
 .tx-del:active { background: var(--neg-tint); }
 
@@ -1346,6 +1350,15 @@ body {
 }
 .invoice-scan-status:empty { display: none; }
 .invoice-scan-status.is-error { color: var(--neg); }
+.invoice-scan-preview { margin-top: 8px; font-size: 0.8rem; }
+.invoice-scan-preview summary { cursor: pointer; }
+.invoice-scan-preview pre {
+  max-height: 180px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
 .invoice-scan-controls {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1414,6 +1427,7 @@ body {
 
 /* ── Amount field with currency affix ── */
 .amount-field { position: relative; }
+.amount-field .et-input { padding-right: 72px; }
 
 .amount-note {
   margin-top: 8px;
@@ -1449,6 +1463,7 @@ body {
   min-height: 44px;
   cursor: pointer;
 }
+.check-row[hidden] { display: none; }
 
 .check-row input[type="checkbox"] {
   width: 24px;
