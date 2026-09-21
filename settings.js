@@ -117,8 +117,14 @@ async function updateBaseCurrency() {
     return;
   }
 
-  txs.forEach(t => { t.amount = t.amount * r; });
-  recurringTxs.forEach(t => { t.amount = t.amount * r; });
+  txs.forEach(t => {
+    t.amount = t.amount * r;
+    if (t.tax) t.tax = t.tax * r;
+  });
+  recurringTxs.forEach(t => {
+    t.amount = t.amount * r;
+    if (t.tax) t.tax = t.tax * r;
+  });
 
   baseCurrency    = next;
   displayCurrency = next;

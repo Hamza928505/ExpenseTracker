@@ -133,13 +133,20 @@ All media queries use **`min-width`** (mobile-first). Bootstrap 5 breakpoints ar
 
 ## 📱 Categories
 
-Each category carries an SVG icon and a colour, both defined in `shared.js`
-(`CAT_ICON` and `CAT_COLOR`) and rendered as a tinted circular avatar by
-`catAvatar()` — used by the transaction list, the breakdown, and the charts.
+Each category carries an SVG icon and a colour and is rendered as a tinted
+circular avatar by `catAvatar()` — used by the transaction list, the filter
+chips, the breakdown, and the charts.
+
+The 13 built-ins live in `DEFAULT_CATS` in `shared.js`. Anything you add is
+merged on top from `localStorage` (`et_categories`) and behaves identically:
 
 **Income:** Salary · Freelance · Investment
 
 **Expense:** General · Food & Dining · Transport · Shopping · Health · Bills & Utilities · Entertainment · Travel · Education · Other
+
+Add your own from **Settings → Categories** with a name, one of 40 line icons,
+and one of 16 colours. Built-ins cannot be deleted; deleting one of your own
+leaves its transactions alone, name intact.
 
 ---
 

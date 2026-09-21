@@ -19,13 +19,13 @@
   </script>
 
   <!-- PWA / home-screen icons -->
-  <link rel="manifest" href="manifest.json?v=3"/>
+  <link rel="manifest" href="manifest.json?v=4"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
   <meta name="apple-mobile-web-app-title" content="ExpenseTracker"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="theme-color" content="#f6f6f4"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png?v=3"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png?v=4"/>
   <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png?v=3"/>
   <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png?v=3"/>
 
@@ -322,6 +322,15 @@
     </div>
 
     <div class="et-field">
+      <label class="et-label" for="fTax">Tax included <span style="font-weight:500">(optional)</span></label>
+      <div class="amount-field">
+        <input class="et-input" id="fTax" type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" autocomplete="off" aria-describedby="fTaxNote"/>
+        <span class="amount-cur" id="fTaxCur">JOD</span>
+      </div>
+      <div class="amount-note" id="fTaxNote">Saved as information; it does not change the total amount.</div>
+    </div>
+
+    <div class="et-field">
       <label class="et-label" for="fDesc">Description <span style="font-weight:500">(optional)</span></label>
       <input class="et-input" id="fDesc" type="text" placeholder="What was this for?" autocomplete="off"/>
     </div>
@@ -341,7 +350,7 @@
       <input class="et-input" id="fDate" type="date"/>
     </div>
 
-    <label class="check-row" for="fRecurring">
+    <label class="check-row" id="fRecurringRow" for="fRecurring">
       <input type="checkbox" id="fRecurring"/>
       <span>
         <span class="check-text d-block">Repeat monthly</span>
@@ -349,7 +358,7 @@
       </span>
     </label>
 
-    <button class="et-btn-accent" onclick="addTx()">Add transaction</button>
+    <button class="et-btn-accent" id="fSubmitBtn" onclick="addTx()">Add transaction</button>
   </div>
 </div>
 

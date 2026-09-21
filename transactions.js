@@ -105,16 +105,19 @@ function render() {
       const nameHtml = t.desc
         ? `<div class="tx-name">${esc(t.desc)}</div>`
         : `<div class="tx-name is-blank">No description</div>`;
+      const taxHtml = Number(t.tax) > 0 ? ` · Tax ${fmt(Number(t.tax))}` : '';
 
       return `
         <div class="tx-item">
           ${catAvatar(t.category)}
           <div class="tx-body">
             ${nameHtml}
-            <div class="tx-meta">${esc(catLabel(t.category))} · ${isIncome ? 'Money in' : 'Money out'}</div>
+            <div class="tx-meta">${esc(catLabel(t.category))} · ${isIncome ? 'Money in' : 'Money out'}${taxHtml}</div>
           </div>
           <div class="tx-right">
             <div class="tx-amount ${isIncome ? 'inc' : ''}">${isIncome ? '+' : '−'}${esc(fmt(t.amount))}</div>
+            <button class="tx-edit" onclick="editTx(${t.id})"
+                    aria-label="Edit ${esc(t.desc || catLabel(t.category))}">${icon('edit')}</button>
             <button class="tx-del" onclick="delTx(${t.id})"
                     aria-label="Delete ${esc(t.desc || catLabel(t.category))}">${icon('trash')}</button>
           </div>
