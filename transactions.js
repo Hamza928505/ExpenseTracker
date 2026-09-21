@@ -105,7 +105,7 @@ function render() {
       const nameHtml = t.desc
         ? `<div class="tx-name">${esc(t.desc)}</div>`
         : `<div class="tx-name is-blank">No description</div>`;
-      const taxHtml = Number(t.tax) > 0 ? ` · Tax ${fmt(Number(t.tax))}` : '';
+      const taxHtml = Number(t.tax) > 0 ? ` · Tax ${esc(fmt(Number(t.tax)))}` : '';
 
       return `
         <div class="tx-item">
