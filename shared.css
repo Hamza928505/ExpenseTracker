@@ -1337,6 +1337,27 @@ body {
   box-shadow: var(--lift-1);
 }
 
+.invoice-scan-status {
+  min-height: 20px;
+  margin-top: 7px;
+  color: var(--text-3);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.invoice-scan-status:empty { display: none; }
+.invoice-scan-status.is-error { color: var(--neg); }
+.invoice-scan-controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+}
+.invoice-scan-controls .et-btn-ghost { min-height: 52px; }
+.invoice-scan .et-btn-ghost:disabled {
+  color: var(--text-3);
+  background: var(--surface-2);
+  cursor: wait;
+}
+
 /* ── Fields ── */
 .et-field { display: block; }
 
