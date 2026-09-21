@@ -333,7 +333,7 @@ let exchangeRate = 1;
 const CURRENCY_SYMBOLS = {
   JOD: 'JD ',  USD: '$',    EUR: '€',    GBP: '£',    JPY: '¥',    CNY: '¥',
   AED: 'AED ', SAR: 'SAR ', EGP: 'E£ ',  KWD: 'KD ',  QAR: 'QR ',  BHD: 'BD ',
-  TRY: '₺',    INR: '₹',    ILS: '₪',    CHF: 'CHF ', CAD: 'CA$',  AUD: 'A$',
+  TRY: '₺',    INR: '₹',    CHF: 'CHF ', CAD: 'CA$',  AUD: 'A$',
   SEK: 'kr ',  NOK: 'kr ',  DKK: 'kr ',  PLN: 'zł ',  RUB: '₽',    ZAR: 'R ',
   BRL: 'R$',   MXN: 'MX$',  KRW: '₩',    SGD: 'S$',   NZD: 'NZ$',  HKD: 'HK$',
   THB: '฿',    VND: '₫',    PHP: '₱',    NGN: '₦',    UAH: '₴',    OMR: 'OMR ',
@@ -348,7 +348,7 @@ const CURRENCY_COUNTRY = {
   CUP: 'cu', CVE: 'cv', CZK: 'cz', DJF: 'dj', DKK: 'dk', DOP: 'do', DZD: 'dz', EGP: 'eg',
   ERN: 'er', ETB: 'et', EUR: 'eu', FJD: 'fj', FKP: 'fk', GBP: 'gb', GEL: 'ge', GHS: 'gh',
   GIP: 'gi', GMD: 'gm', GNF: 'gn', GTQ: 'gt', GYD: 'gy', HKD: 'hk', HNL: 'hn', HRK: 'hr',
-  HTG: 'ht', HUF: 'hu', IDR: 'id', ILS: 'il', INR: 'in', IQD: 'iq', IRR: 'ir', ISK: 'is',
+  HTG: 'ht', HUF: 'hu', IDR: 'id', INR: 'in', IQD: 'iq', IRR: 'ir', ISK: 'is',
   JMD: 'jm', JOD: 'jo', JPY: 'jp', KES: 'ke', KGS: 'kg', KHR: 'kh', KMF: 'km', KPW: 'kp',
   KRW: 'kr', KWD: 'kw', KYD: 'ky', KZT: 'kz', LAK: 'la', LBP: 'lb', LKR: 'lk', LRD: 'lr',
   LSL: 'ls', LYD: 'ly', MAD: 'ma', MDL: 'md', MGA: 'mg', MKD: 'mk', MMK: 'mm', MNT: 'mn',
@@ -423,7 +423,6 @@ const CURRENCY_NAMES = {
   HTG:  'Haitian Gourde',
   HUF:  'Hungarian Forint',
   IDR:  'Indonesian Rupiah',
-  ILS:  'Israeli Shekel',
   INR:  'Indian Rupee',
   IQD:  'Iraqi Dinar',
   IRR:  'Iranian Rial',
@@ -521,6 +520,19 @@ const CURRENCY_NAMES = {
   ZWL:  'Zimbabwean Dollar',
 };
 
+function isSupportedCurrency(code) {
+  return Object.prototype.hasOwnProperty.call(CURRENCY_COUNTRY, code);
+}
+
+function supportedCurrencies(codes) {
+  return [...new Set(codes)].filter(isSupportedCurrency).sort();
+}
+
+if (!isSupportedCurrency(baseCurrency)) baseCurrency = 'JOD';
+if (!isSupportedCurrency(displayCurrency)) displayCurrency = baseCurrency;
+localStorage.setItem('et_base_currency', baseCurrency);
+localStorage.setItem('et_display_currency', displayCurrency);
+
 /* Offered first in every picker; everything else lands under "All currencies". */
 const COMMON_CURRENCIES = [
   'JOD', 'USD', 'EUR', 'GBP', 'AED', 'SAR', 'EGP', 'KWD', 'QAR', 'BHD',
@@ -528,7 +540,7 @@ const COMMON_CURRENCIES = [
 ];
 
 /* Starts as the offline-safe set; fetchExchangeRate() widens it if rates arrive. */
-let allCurrencies = COMMON_CURRENCIES.slice().sort();
+let allCurrencies = supportedCurrencies(COMMON_CURRENCIES);
 
 function currencyName(code) {
   return CURRENCY_NAMES[code] || code;
@@ -567,6 +579,14 @@ let ratesData = null;   /* { base, date, rates } */
 try {
   ratesData = JSON.parse(localStorage.getItem('et_rates') || 'null');
 } catch (e) { ratesData = null; }
+if (ratesData) {
+  if (!isSupportedCurrency(ratesData.base) || !ratesData.rates) ratesData = null;
+  else ratesData.rates = Object.fromEntries(
+    Object.entries(ratesData.rates).filter(([code]) => isSupportedCurrency(code))
+  );
+  if (ratesData) localStorage.setItem('et_rates', JSON.stringify(ratesData));
+  else localStorage.removeItem('et_rates');
+}
 
 /* Goes false once a rate lookup fails AND we have nothing cached — we then
    refuse to show converted amounts rather than label base-currency numbers
@@ -575,6 +595,7 @@ let ratesAvailable = true;
 
 /** Rate from the base currency to `code`, or null when we cannot know it. */
 function rateFor(code) {
+  if (!isSupportedCurrency(code)) return null;
   if (code === baseCurrency) return 1;
   if (ratesData && ratesData.base === baseCurrency && typeof ratesData.rates[code] === 'number') {
     return ratesData.rates[code];
@@ -598,7 +619,7 @@ function applyDisplayCurrency() {
 function loadWallet() {
   try {
     const raw = JSON.parse(localStorage.getItem('et_wallet') || 'null');
-    if (Array.isArray(raw) && raw.length) return raw.filter(c => typeof c === 'string');
+    if (Array.isArray(raw) && raw.length) return raw.filter(c => typeof c === 'string' && isSupportedCurrency(c));
   } catch (e) { /* fall through */ }
   return [baseCurrency, baseCurrency === 'USD' ? 'EUR' : 'USD'];
 }
@@ -608,10 +629,10 @@ let walletCurrencies = loadWallet();
 /** The base currency is always first and always present. */
 function normalizeWallet() {
   walletCurrencies = [baseCurrency].concat(
-    walletCurrencies.filter(c => c && c !== baseCurrency)
+    walletCurrencies.filter(c => c && c !== baseCurrency && isSupportedCurrency(c))
   );
 }
-normalizeWallet();
+saveWallet();
 
 function saveWallet() {
   normalizeWallet();
@@ -619,7 +640,7 @@ function saveWallet() {
 }
 
 function addWalletCurrency(code) {
-  if (!code || walletCurrencies.includes(code)) return;
+  if (!isSupportedCurrency(code) || walletCurrencies.includes(code)) return;
   walletCurrencies.push(code);
   saveWallet();
   refreshCurrencyUI();
@@ -637,7 +658,7 @@ function removeWalletCurrency(code) {
 
 /** Instant when the rate is already cached; fetches once if it is not. */
 async function setDisplayCurrency(code, quiet) {
-  if (!code) return false;
+  if (!isSupportedCurrency(code)) return false;
 
   if (rateFor(code) === null) {
     await fetchExchangeRate();
@@ -816,12 +837,15 @@ async function fetchExchangeRate() {
     const data = await res.json();
     if (!data || !data.rates) throw new Error('No rates in response');
 
-    ratesData = { base: baseCurrency, date: data.date || new Date().toISOString().split('T')[0], rates: data.rates };
+    const rates = Object.fromEntries(
+      Object.entries(data.rates).filter(([code]) => isSupportedCurrency(code))
+    );
+    ratesData = { base: baseCurrency, date: data.date || new Date().toISOString().split('T')[0], rates };
     try { localStorage.setItem('et_rates', JSON.stringify(ratesData)); } catch (e) { /* quota — memory only */ }
 
     // Widen the picker to everything the API knows, keeping our built-ins so
     // a currency never disappears from the list.
-    allCurrencies = [...new Set([...COMMON_CURRENCIES, ...Object.keys(data.rates), baseCurrency])].sort();
+    allCurrencies = supportedCurrencies([...COMMON_CURRENCIES, ...Object.keys(rates), baseCurrency]);
     ratesAvailable = true;
 
     if (!applyDisplayCurrency()) save();
@@ -841,11 +865,11 @@ async function fetchExchangeRate() {
     const kept = applyDisplayCurrency();
     if (!kept) save();
 
-    allCurrencies = [...new Set([
+    allCurrencies = supportedCurrencies([
       ...COMMON_CURRENCIES,
       ...(haveCache ? Object.keys(ratesData.rates) : []),
       baseCurrency,
-    ])].sort();
+    ]);
 
     refreshCurrencyUI();
     if (typeof render === 'function') render();
@@ -871,7 +895,7 @@ function notifyRatesUnavailable() {
 
 /* Cached rates make the first paint correct; the fetch only refreshes them. */
 if (allCurrencies.length && ratesData && ratesData.base === baseCurrency) {
-  allCurrencies = [...new Set([...COMMON_CURRENCIES, ...Object.keys(ratesData.rates), baseCurrency])].sort();
+  allCurrencies = supportedCurrencies([...COMMON_CURRENCIES, ...Object.keys(ratesData.rates), baseCurrency]);
 }
 applyDisplayCurrency();
 fetchExchangeRate();
