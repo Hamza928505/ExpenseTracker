@@ -37,7 +37,15 @@ function render() {
   const mt  = monthTxs();
   const inc = mt.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
   const exp = mt.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
-  const bal = inc - exp;
+  const viewYear = viewDate.getFullYear();
+  const viewMonth = viewDate.getMonth();
+  const bal = txs.reduce((s, t) => {
+    const d = new Date(t.date + 'T00:00:00');
+    if (d.getFullYear() < viewYear || (d.getFullYear() === viewYear && d.getMonth() <= viewMonth)) {
+      return s + (t.type === 'income' ? t.amount : -t.amount);
+    }
+    return s;
+  }, 0);
 
   // ── Balance panel ──
   const hb = document.getElementById('heroBalance');
