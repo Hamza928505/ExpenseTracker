@@ -306,8 +306,12 @@
 
     <div class="invoice-scan">
       <input id="fInvoice" type="file" accept="image/*" capture="environment" hidden onchange="scanInvoice(this)"/>
-      <button type="button" class="et-btn-ghost" id="fScanBtn" onclick="document.getElementById('fInvoice').click()">
-        <i data-icon="camera"></i>Scan invoice
+      <input id="fInvoiceGallery" type="file" accept="image/*" hidden onchange="scanInvoice(this)"/>
+      <button type="button" class="et-btn-ghost" id="fScanBtn" aria-label="Scan invoice with camera" onclick="document.getElementById('fInvoice').click()">
+        <i data-icon="camera"></i>Camera
+      </button>
+      <button type="button" class="et-btn-ghost" id="fScanGalleryBtn" aria-label="Scan invoice from gallery" onclick="document.getElementById('fInvoiceGallery').click()">
+        <i data-icon="image"></i>Gallery
       </button>
       <div class="invoice-scan-status" id="fScanStatus" role="status" aria-live="polite"></div>
     </div>

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 
 const elements = Object.fromEntries([
-  'fScanBtn', 'fScanLang', 'fSubmitBtn', 'fScanPreview', 'fScanText', 'fScanStatus',
+  'fScanBtn', 'fScanGalleryBtn', 'fScanLang', 'fSubmitBtn', 'fScanPreview', 'fScanText', 'fScanStatus',
   'fAmt', 'fTax', 'fDesc', 'fDate',
 ].map(id => [id, { value: '', textContent: '', disabled: false, classList: { toggle() {} } }]));
 elements.fScanLang.value = 'auto';
@@ -34,7 +34,12 @@ const context = vm.createContext({
   setType() {}, previewAmountInBase() {}, setTimeout, clearTimeout,
 });
 vm.runInContext(fs.readFileSync('invoice.js', 'utf8'), context);
-const scan = () => context.scanInvoice({ files: [{ type: 'image/png', size: 100 }], value: 'invoice.png' });
+const PNG = '\x89PNG\r\n\x1a\n\0\0\0\rIHDR';
+const file = (header, type = 'image/png') => {
+  const bytes = Buffer.from(header, 'latin1');
+  return { type, size: bytes.length, slice: (start, end) => new Blob([bytes.subarray(start, end)]) };
+};
+const scan = (picked = file(PNG)) => context.scanInvoice({ files: [picked], value: 'invoice.png' });
 
 (async () => {
   let bitmapClosed = false;
@@ -56,7 +61,23 @@ const scan = () => context.scanInvoice({ files: [{ type: 'image/png', size: 100 
   assert.equal(drawArgs.at(-2), 1200);
   assert.equal(drawArgs.at(-1), 2400);
   assert.equal(bitmapClosed, true);
+
+  // Undecodable bytes must never fall through to the OCR engine.
+  context.createImageBitmap = async () => { throw new Error('decode failed'); };
+  await assert.rejects(context.prepareInvoiceImage({ type: 'image/jpeg' }), /could not be opened/);
+  await scan(file('\xff\xd8\xff\xe0garbage', 'image/jpeg'));
+  assert.match(elements.fScanStatus.textContent, /could not be opened/);
+  assert.equal(workers.length, 0);
   delete context.createImageBitmap;
+
+  // Content sniffing beats the claimed MIME type: an SVG named invoice.png is refused before decoding.
+  await scan(file('<svg xmlns="http://www.w3.org/2000/svg" onload="alert(1)">'));
+  assert.match(elements.fScanStatus.textContent, /Only JPEG, PNG/);
+  await scan(file(''));
+  assert.match(elements.fScanStatus.textContent, /empty/);
+  assert.equal(workers.length, 0);
+  assert.equal(elements.fScanBtn.disabled, false);
+  assert.equal(elements.fScanGalleryBtn.disabled, false);
 
   await scan();
   assert.equal(workers[0].languages, 'osd');
@@ -95,6 +116,8 @@ const scan = () => context.scanInvoice({ files: [{ type: 'image/png', size: 100 
   releaseRecognition = true;
   const pending = scan();
   await new Promise(resolve => setImmediate(resolve));
+  assert.equal(elements.fScanBtn.disabled, true);
+  assert.equal(elements.fScanGalleryBtn.disabled, true, 'Gallery must not start a second scan mid-scan');
   vm.runInContext('invoiceScanId++', context); // Closing the transaction sheet.
   elements.fAmt.value = 7;
   releaseRecognition();

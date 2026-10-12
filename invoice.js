@@ -55,16 +55,27 @@ const INVOICE_SCRIPT_LANGUAGES = {
   Han: ['chi_sim', 'chi_tra', 'jpn'], HanS: ['chi_sim'], HanT: ['chi_tra'],
   Hebrew: ['heb', 'yid'], Japanese: ['jpn'], Hangul: ['kor'],
 };
+// Magic numbers for JPEG, PNG, WebP and HEIF (HEIC/AVIF brands). File names and MIME types are
+// caller-controlled, so SVG, HTML, PDF and executables renamed to .jpg are rejected by content.
+const INVOICE_IMAGE_MAGIC = /^(?:\xff\xd8\xff|\x89PNG\r\n\x1a\n|RIFF[^]{4}WEBP|[^]{4}ftyp(?:hei[cmsx]|hev[cmsx]|mif1|msf1|avif|avis))/;
+const INVOICE_MAX_BYTES = 25 * 1024 * 1024;
 let invoiceOcrLoader;
 let invoiceOcrWorker;
 let invoiceOcrWorkerLanguages = '';
 let invoiceScanId = 0;
 
+function isInvoiceImage(bytes) {
+  return INVOICE_IMAGE_MAGIC.test(String.fromCharCode(...bytes.subarray(0, 16)));
+}
+
+// Decoding and redrawing also drops EXIF/GPS metadata and anything appended to the image (polyglots):
+// OCR only ever receives canvas pixels, never the original bytes.
 async function prepareInvoiceImage(file) {
   if (typeof createImageBitmap !== 'function' || typeof document === 'undefined') return file;
   let bitmap;
   try {
-    bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+    // Older engines throw on the 'from-image' enum; their default already honours EXIF rotation.
+    bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' }).catch(() => createImageBitmap(file));
     const longest = Math.max(bitmap.width, bitmap.height);
     const shortest = Math.min(bitmap.width, bitmap.height);
     const scale = Math.min(2400 / longest, Math.max(1, 1600 / shortest));
@@ -78,7 +89,7 @@ async function prepareInvoiceImage(file) {
     context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     return canvas;
   } catch (_) {
-    return file;
+    throw new Error('This image could not be opened. Try a JPEG or PNG photo.');
   } finally {
     bitmap?.close?.();
   }
@@ -383,7 +394,7 @@ function initInvoiceLanguage() {
   const controls = document.createElement('div');
   controls.className = 'invoice-scan-controls';
   button.before(controls);
-  controls.append(button, select);
+  controls.append(...invoiceScanButtons(), select);
 
   const details = document.createElement('details');
   details.id = 'fScanPreview';
@@ -412,24 +423,30 @@ async function getInvoiceWorker(Tesseract, language) {
   return invoiceOcrWorker;
 }
 
+function invoiceScanButtons() {
+  return ['fScanBtn', 'fScanGalleryBtn'].map(id => document.getElementById(id)).filter(Boolean);
+}
+
 async function scanInvoice(input) {
   const file = input.files && input.files[0];
   input.value = '';
   if (!file) return;
 
-  const button = document.getElementById('fScanBtn');
-  if (button.disabled) return;
+  const buttons = invoiceScanButtons();
+  if (buttons.some(button => button.disabled)) return;
   const scanId = ++invoiceScanId;
   const preview = document.getElementById('fScanPreview');
   const submit = document.getElementById('fSubmitBtn');
   try {
-    if (file.type && !file.type.startsWith('image/')) throw new Error('Choose an invoice photo or image.');
-    if (file.size > 25 * 1024 * 1024) throw new Error('Choose an image smaller than 25 MB.');
-
-    button.disabled = true;
+    buttons.forEach(button => { button.disabled = true; });
     submit.disabled = true;
     preview.hidden = true;
     preview.open = false;
+    if (!file.size) throw new Error('This image is empty.');
+    if (file.size > INVOICE_MAX_BYTES) throw new Error('Choose an image smaller than 25 MB.');
+    if (!isInvoiceImage(new Uint8Array(await file.slice(0, 16).arrayBuffer()))) {
+      throw new Error('Only JPEG, PNG, WebP or HEIC photos can be scanned.');
+    }
     setInvoiceStatus('Improving invoice photo…');
     const image = await prepareInvoiceImage(file);
     setInvoiceStatus('Preparing scanner…');
@@ -486,7 +503,7 @@ async function scanInvoice(input) {
     invoiceOcrWorker = null;
     if (scanId === invoiceScanId) setInvoiceStatus(String(error?.message || error || 'The invoice could not be scanned.'), true);
   } finally {
-    button.disabled = false;
+    buttons.forEach(button => { button.disabled = false; });
     submit.disabled = false;
   }
 }
@@ -494,9 +511,16 @@ async function scanInvoice(input) {
 if (typeof document !== 'undefined') initInvoiceLanguage();
 
 if (typeof module !== 'undefined') {
-  module.exports = { parseInvoiceText, invoiceLanguageForScript };
+  module.exports = { parseInvoiceText, invoiceLanguageForScript, isInvoiceImage };
   if (require.main === module) {
     const assert = require('node:assert/strict');
+    const bytes = text => Uint8Array.from(text, char => char.charCodeAt(0));
+    ['\xff\xd8\xff\xe0\0\x10JFIF', '\x89PNG\r\n\x1a\n\0\0\0\rIHDR', 'RIFF\x24\0\0\0WEBPVP8 ',
+      '\0\0\0\x18ftypheic\0\0\0\0', '\0\0\0\x1cftypavif\0\0\0\0', '\0\0\0\x18ftypmif1\0\0\0\0']
+      .forEach(header => assert.equal(isInvoiceImage(bytes(header)), true, JSON.stringify(header)));
+    ['', '<svg xmlns="http://www.w3.org/2000/svg">', '%PDF-1.7', 'MZ\x90\0', 'GIF89a', '<html>',
+      '\0\0\0\x18ftypisom\0\0\0\0', 'RIFF\x24\0\0\0WAVEfmt ', '\xff\xd8', 'x\xff\xd8\xff\xe0']
+      .forEach(header => assert.equal(isInvoiceImage(bytes(header)), false, JSON.stringify(header)));
     const parsed = parseInvoiceText('Acme Market\nInvoice Date: 21/09/2026\nVAT 16% JOD 2.345\nGrand Total JOD 12.345');
     assert.deepEqual(parsed, { description: 'Acme Market', date: '2026-09-21', amount: 12.345, tax: 2.345 });
     const arabic = parseInvoiceText('متجر عمان\nتاريخ الفاتورة: ٢١/٠٩/٢٠٢٦\nالإجمالي الكلي ١٢٫٣٤٥');

@@ -1361,10 +1361,11 @@ body {
 }
 .invoice-scan-controls {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
-.invoice-scan-controls .et-btn-ghost { min-height: 52px; }
+.invoice-scan-controls .et-btn-ghost { min-height: 52px; padding-inline: 12px; }
+.invoice-scan-controls .invoice-language { grid-column: 1 / -1; }
 .invoice-scan .et-btn-ghost:disabled {
   color: var(--text-3);
   background: var(--surface-2);
